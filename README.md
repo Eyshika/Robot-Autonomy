@@ -1,4 +1,4 @@
-# asl_turtlebot
+# robot_autonomy
 
 This contains a _starting point_ for your final project. Below are _brief_
 descriptions of the code. You are strongly encouraged to take a closer look into
@@ -22,7 +22,7 @@ representation of the final project environment.
 ----------------------
 **Launch Files:**
 
-`launch/asl_turtlebot_core.launch`: Launches the core elements of the
+`launch/robot_autonomy_core.launch`: Launches the core elements of the
 turtlebot stack (turtlebot drivers, camera, lidar, gmapping, static tf
 transforms). This should run onboard the jetson.
 
