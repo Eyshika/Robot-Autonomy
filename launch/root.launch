@@ -4,8 +4,8 @@
   <arg name="gmapping" default="true" />
   <arg name="rviz" default="" />
   <arg name="world" default="" />
-  <arg name="detector" default="" />
-  <arg name="navigator" default="" />
+  <!-- <arg name="detector" default="" />
+  <arg name="navigator" default="" /> -->
   <arg name="publish_state" default="true" />
   <arg name="x_pos" default="0.0" />
   <arg name="y_pos" default="0.0" />
@@ -31,8 +31,7 @@
     <!-- ######### select the world by short name or by path ############ -->
     <include file="$(find gazebo_ros)/launch/empty_world.launch">
       <arg name="use_sim_time" value="true"/>
-      <arg name="world_name" value="$(find robot_autonomy)/world/$(arg world).world" if="$(eval '/' not in world)" />
-      <arg name="world_name" value="$(arg world)" unless="$(eval '/' not in world)"/>
+      <arg name="world_name" value="$(find robot_autonomy)/world/project_city.world"/>
       <arg name="paused" value="false"/>
       <arg name="debug" value="false"/>
       <arg name="gui" value="$(arg gui)"/>
@@ -43,25 +42,25 @@
   </group>
 
   <!-- ###################### launch the configured gmapping ############## -->
-  <group if="$(arg gmapping)">
+  <!-- <group if="$(arg gmapping)">
     <include file="$(find robot_autonomy)/launch/config/gmapping_config.launch" />
-  </group>
+  </group> -->
 
   <!-- ################ unconditonally useful scripts ##################### -->
-  <node pkg="robot_autonomy" type="goal_commander.py" name="goal_commander" />
+  <!-- <node pkg="robot_autonomy" type="goal_commander.py" name="goal_commander" /> -->
 
   <!-- ################ conditionally launched scripts #################### -->
-  <group if="$(eval len(detector) > 0)">
+  <!-- <group if="$(eval len(detector) > 0)">
     <node pkg="robot_autonomy" type="$(arg detector)"
       name="turtlebot_detector" />
   </group>
   <group if="$(eval len(navigator) > 0)">
     <node pkg="robot_autonomy" type="$(arg navigator)" name="turtlebot_navigator" output="screen" />
-  </group>
+  </group> -->
 
   <!-- ###################### conditionally launch rviz ################### -->
-  <group if="$(eval len(rviz) > 0)">
+  <!-- <group if="$(eval len(rviz) > 0)">
     <node name="rviz" pkg="rviz" type="rviz" args="-d $(find robot_autonomy)/rviz/$(arg rviz).rviz"/>
-  </group>
+  </group> -->
 
 </launch>
