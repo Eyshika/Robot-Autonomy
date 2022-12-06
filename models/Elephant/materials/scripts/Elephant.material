@@ -1,4 +1,4 @@
-material vrc/Tag0
+material vrc/Elephant
 {
 	receive_shadows off
 	technique
@@ -7,7 +7,7 @@ material vrc/Tag0
 		{
 			texture_unit
 			{
-				texture cat1.jpg
+				texture elephant.jpg
 				filtering anistropic
 				max_anisotropy 16
 				scale 1 1

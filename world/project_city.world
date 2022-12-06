@@ -336,14 +336,14 @@
         <collision name='collision'>
           <geometry>
             <box>
-              <size>1.2226 0.001 1</size>
+              <size>1.073 0.001 1</size>
             </box>
           </geometry>
         </collision>
         <visual name='visual'>
           <geometry>
             <box>
-              <size>1.2226 0.001 1</size>
+              <size>1.073 0.001 1</size>
             </box>
           </geometry>
           <material>
@@ -354,7 +354,7 @@
           </material>
         </visual>
       </link>
-      <pose frame=''>1.173697 1.32080264161 0 0 0 0.0</pose>
+      <pose frame=''>1.102297 1.32080264161 0 0 0 0.0</pose>
     </model>
 
     <model name='wall_11'>
@@ -660,14 +660,14 @@
         <collision name='collision'>
           <geometry>
             <box>
-              <size>1.29540259081 0.001 1</size>
+              <size>0.84 0.001 1</size>
             </box>
           </geometry>
         </collision>
         <visual name='visual'>
           <geometry>
             <box>
-              <size>1.29540259081 0.001 1</size>
+              <size>0.84 0.001 1</size>
             </box>
           </geometry>
           <material>
@@ -678,7 +678,7 @@
           </material>
         </visual>
       </link>
-      <pose frame=''>1.206502413 1.75260350521 0 0 0 3.14159265359</pose>
+      <pose frame=''>0.9827 1.75260350521 0 0 0 3.14159265359</pose>
     </model>
 
     <model name='wall_24'>
@@ -879,7 +879,7 @@
         <kinematic>0</kinematic>
         <gravity>1</gravity>
       </link>
-      <pose frame=''>0.6586 0.4380 0 -0.15 -0.000737 1.69</pose>
+      <pose frame=''>3.464 0.447 0 0 -0 -2.339</pose>
     </model>
 
     <model name='Fire Hydrant'>
@@ -1059,103 +1059,53 @@
         <kinematic>0</kinematic>
         <gravity>1</gravity>
       </link>
-      <pose frame=''>1.0289 2.88 0.00105 -0.001 -0.0011 1.602</pose>
+      <pose frame=''>.5889 1.66 0.00105 -0.001 -0.0011 1.602</pose>
     </model>
 
-    <model name='Mailbox'>
-      <static>1</static>
-
-      <link name='link'>
-        <collision name='collision'>
-          <geometry>
-            <mesh>
-              <uri>model://mailbox/meshes/mailbox.dae</uri>
-              <scale>.4 .4 .4</scale>
-            </mesh>
-          </geometry>
-          <max_contacts>10</max_contacts>
-          <surface>
-            <contact>
-              <ode/>
-            </contact>
-            <bounce/>
-            <friction>
-              <torsional>
-                <ode/>
-              </torsional>
-              <ode/>
-            </friction>
-          </surface>
-        </collision>
+    <model name='Stop Sign 3'>
+        <static>1</static>
+        <link name='link'>
+            <collision name='collision'>
+            <geometry>
+                <mesh>
+                <uri>model://stop_sign/meshes/stop_sign.dae</uri>
+                <scale>.4 .2 .2</scale>
+                </mesh>
+            </geometry>
+            <max_contacts>10</max_contacts>
+            <surface>
+                <contact>
+                    <ode/>
+                </contact>
+                <bounce/>
+                <friction>
+                    <torsional>
+                    <ode/>
+                    </torsional>
+                    <ode>
+                        <mu>0.2</mu>
+                        <mu2>0.2</mu2>
+                    </ode>
+                </friction>
+            </surface>
+            </collision>
         <visual name='visual'>
           <geometry>
             <mesh>
-              <uri>model://mailbox/meshes/mailbox.dae</uri>
-              <scale>.4 .4 .4</scale>
+              <uri>model://stop_sign/meshes/stop_sign.dae</uri>
+              <scale>.4 .2 .2</scale>
             </mesh>
           </geometry>
           <material>
             <script>
-              <uri>model://mailbox/materials/scripts</uri>
-              <uri>model://mailbox/materials/textures</uri>
-              <name>Mailbox/Diffuse</name>
+              <uri>model://stop_sign/materials/scripts</uri>
+              <uri>model://stop_sign/materials/textures</uri>
+              <name>StopSign/Diffuse</name>
             </script>
           </material>
         </visual>
         <self_collide>0</self_collide>
         <inertial>
-          <pose>0 0 0 0 -0 0</pose>
-          <inertia>
-            <ixx>1</ixx>
-            <ixy>0</ixy>
-            <ixz>0</ixz>
-            <iyy>1</iyy>
-            <iyz>0</iyz>
-            <izz>1</izz>
-          </inertia>
-          <mass>1</mass>
-        </inertial>
-        <enable_wind>0</enable_wind>
-        <kinematic>0</kinematic>
-      </link>
-      <pose>1.703 1.3808 0 0 -0 1.58</pose>
-    </model>
-
-    <model name='Construction Cone1'>
-      <static>1</static>
-
-      <link name='link'>
-        <collision name='collision'>
-          <geometry>
-            <mesh>
-              <uri>model://construction_cone/meshes/construction_cone.dae</uri>
-              <scale>2.5 2.5 2.5</scale>
-            </mesh>
-          </geometry>
-          <max_contacts>10</max_contacts>
-          <surface>
-            <contact>
-              <ode/>
-            </contact>
-            <bounce/>
-            <friction>
-              <torsional>
-                <ode/>
-              </torsional>
-              <ode/>
-            </friction>
-          </surface>
-        </collision>
-        <visual name='visual'>
-          <geometry>
-            <mesh>
-              <uri>model://construction_cone/meshes/construction_cone.dae</uri>
-              <scale>2.5 2.5 2.5</scale>
-            </mesh>
-          </geometry>
-        </visual>
-        <self_collide>0</self_collide>
-        <inertial>
           <inertia>
             <ixx>1</ixx>
             <ixy>0</ixy>
@@ -1169,322 +1119,55 @@
         <kinematic>0</kinematic>
         <gravity>1</gravity>
       </link>
-      <pose frame=''>3.1139 2.3372 0 0 -0 1.58</pose>
+      <pose frame=''>2.1814 0.583 0.00105 -0.001 0.0011 -2.983</pose>
     </model>
 
-    <model name='Construction Cone2'>
-      <static>1</static>
-
-      <link name='link'>
-        <collision name='collision'>
-          <geometry>
-            <mesh>
-              <uri>model://construction_cone/meshes/construction_cone.dae</uri>
-              <scale>2.5 2.5 2.5</scale>
-            </mesh>
-          </geometry>
-          <max_contacts>10</max_contacts>
-          <surface>
-            <contact>
-              <ode/>
-            </contact>
-            <bounce/>
-            <friction>
-              <torsional>
-                <ode/>
-              </torsional>
-              <ode/>
-            </friction>
-          </surface>
-        </collision>
-        <visual name='visual'>
-          <geometry>
-            <mesh>
-              <uri>model://construction_cone/meshes/construction_cone.dae</uri>
-              <scale>2.5 2.5 2.5</scale>
-            </mesh>
-          </geometry>
-        </visual>
-        <self_collide>0</self_collide>
-        <inertial>
-          <inertia>
-            <ixx>1</ixx>
-            <ixy>0</ixy>
-            <ixz>0</ixz>
-            <iyy>1</iyy>
-            <iyz>0</iyz>
-            <izz>1</izz>
-          </inertia>
-          <mass>1</mass>
-        </inertial>
-        <kinematic>0</kinematic>
-        <gravity>1</gravity>
-      </link>
-      <pose frame=''>3.0839 2.05072 0 0 -0 1.58</pose>
-    </model>
-
-    <model name='Construction Cone3'>
-      <static>1</static>
-    
-      <link name='link'>
-        <collision name='collision'>
-          <geometry>
-            <mesh>
-              <uri>model://construction_cone/meshes/construction_cone.dae</uri>
-              <scale>2.5 2.5 2.5</scale>
-            </mesh>
-          </geometry>
-          <max_contacts>10</max_contacts>
-          <surface>
-            <contact>
-              <ode/>
-            </contact>
-            <bounce/>
-            <friction>
-              <torsional>
-                <ode/>
-              </torsional>
-              <ode/>
-            </friction>
-          </surface>
-        </collision>
-        <visual name='visual'>
-          <geometry>
-            <mesh>
-              <uri>model://construction_cone/meshes/construction_cone.dae</uri>
-              <scale>2.5 2.5 2.5</scale>
-            </mesh>
-          </geometry>
-        </visual>
-        <self_collide>0</self_collide>
-        <inertial>
-          <inertia>
-            <ixx>1</ixx>
-            <ixy>0</ixy>
-            <ixz>0</ixz>
-            <iyy>1</iyy>
-            <iyz>0</iyz>
-            <izz>1</izz>
-          </inertia>
-          <mass>1</mass>
-        </inertial>
-        <kinematic>0</kinematic>
-        <gravity>1</gravity>
-      </link>
-      <pose frame=''>3.0839 1.72072 0 0 -0 1.58</pose>
-    </model>
-
-    <model name='Construction Cone4'>
-      <static>1</static>
-      <link name='link'>
-        <collision name='collision'>
-          <geometry>
-            <mesh>
-              <uri>model://construction_cone/meshes/construction_cone.dae</uri>
-              <scale>2.5 2.5 2.5</scale>
-            </mesh>
-          </geometry>
-          <max_contacts>10</max_contacts>
-          <surface>
-            <contact>
-              <ode/>
-            </contact>
-            <bounce/>
-            <friction>
-              <torsional>
-                <ode/>
-              </torsional>
-              <ode/>
-            </friction>
-          </surface>
-        </collision>
-        <visual name='visual'>
-          <geometry>
-            <mesh>
-              <uri>model://construction_cone/meshes/construction_cone.dae</uri>
-              <scale>2.5 2.5 2.5</scale>
-            </mesh>
-          </geometry>
-        </visual>
-        <self_collide>0</self_collide>
-        <inertial>
-          <inertia>
-            <ixx>1</ixx>
-            <ixy>0</ixy>
-            <ixz>0</ixz>
-            <iyy>1</iyy>
-            <iyz>0</iyz>
-            <izz>1</izz>
-          </inertia>
-          <mass>1</mass>
-        </inertial>
-        <kinematic>0</kinematic>
-        <gravity>1</gravity>
-      </link>
-      <pose frame=''>3.0639 1.38072 0 0 -0 1.58</pose>
-    </model>
-
-    <model name='Construction Cone5'>
-      <static>1</static>
-      <link name='link'>
-        <collision name='collision'>
-          <geometry>
-            <mesh>
-              <uri>model://construction_cone/meshes/construction_cone.dae</uri>
-              <scale>2.5 2.5 2.5</scale>
-            </mesh>
-          </geometry>
-          <max_contacts>10</max_contacts>
-          <surface>
-            <contact>
-              <ode/>
-            </contact>
-            <bounce/>
-            <friction>
-              <torsional>
-                <ode/>
-              </torsional>
-              <ode/>
-            </friction>
-          </surface>
-        </collision>
-        <visual name='visual'>
-          <geometry>
-            <mesh>
-              <uri>model://construction_cone/meshes/construction_cone.dae</uri>
-              <scale>2.5 2.5 2.5</scale>
-            </mesh>
-          </geometry>
-        </visual>
-        <self_collide>0</self_collide>
-        <inertial>
-          <inertia>
-            <ixx>1</ixx>
-            <ixy>0</ixy>
-            <ixz>0</ixz>
-            <iyy>1</iyy>
-            <iyz>0</iyz>
-            <izz>1</izz>
-          </inertia>
-          <mass>1</mass>
-        </inertial>
-        <kinematic>0</kinematic>
-        <gravity>1</gravity>
-      </link>
-      <pose frame=''>3.0839 1.02072 0 0 -0 1.58</pose>
-    </model>
-
-        <model name='Construction Cone6'>
-      <link name='link'>
-        <collision name='collision'>
-          <geometry>
-            <mesh>
-              <uri>model://construction_cone/meshes/construction_cone.dae</uri>
-              <scale>2.5 2.5 2.5</scale>
-            </mesh>
-          </geometry>
-          <max_contacts>10</max_contacts>
-          <surface>
-            <contact>
-              <ode/>
-            </contact>
-            <bounce/>
-            <friction>
-              <torsional>
-                <ode/>
-              </torsional>
-              <ode/>
-            </friction>
-          </surface>
-        </collision>
-        <visual name='visual'>
-          <geometry>
-            <mesh>
-              <uri>model://construction_cone/meshes/construction_cone.dae</uri>
-              <scale>2.5 2.5 2.5</scale>
-            </mesh>
-          </geometry>
-        </visual>
-        <self_collide>0</self_collide>
-        <inertial>
-          <inertia>
-            <ixx>1</ixx>
-            <ixy>0</ixy>
-            <ixz>0</ixz>
-            <iyy>1</iyy>
-            <iyz>0</iyz>
-            <izz>1</izz>
-          </inertia>
-          <mass>1</mass>
-        </inertial>
-        <kinematic>0</kinematic>
-        <gravity>1</gravity>
-      </link>
-      <pose frame=''>3.01839 0.65072 0 0 -0 1.58</pose>
+    <model name ='Cat1'>
+      <include>
+        <uri>model://Tag0</uri>   
+        <pose> 0.119 0.08 0.081 0 0 </pose> 
+      </include>
     </model>
 
     <include>
-        <uri>model://cardboard_box</uri>
-        <scale> 0.1 0.1 0.1 </scale>
-        <pose frame=''>0.8136 0.968 0 0 0 0</pose>
+      <uri>model://Cow</uri>   
+      <pose> 2.7239 2.05072 0.084 0 -0 1.58 </pose> 
     </include>
 
-    <model name='Cafe Table'>
-      <link name='link'>
-        <collision name='collision'>
-          <geometry>
-            <mesh>
-              <uri>model://cafe_table/meshes/cafe_table.dae</uri>
-              <scale>.4 .2 .2</scale>
-            </mesh>
-          </geometry>
-          <max_contacts>10</max_contacts>
-          <surface>
-            <contact>
-              <ode/>
-            </contact>
-            <bounce/>
-            <friction>
-              <torsional>
-                <ode/>
-              </torsional>
-              <ode/>
-            </friction>
-          </surface>
-        </collision>
-        <visual name='visual'>
-          <geometry>
-            <mesh>
-              <uri>model://cafe_table/meshes/cafe_table.dae</uri>
-              <scale>.4 .2 .2</scale>
-            </mesh>
-          </geometry>
-          <material>
-            <script>
-              <uri>model://cafe_table/materials/scripts</uri>
-              <uri>model://cafe_table/materials/textures</uri>
-              <name>CafeTable/Diffuse</name>
-            </script>
-          </material>
-        </visual>
-        <self_collide>0</self_collide>
-        <inertial>
-          <inertia>
-            <ixx>1</ixx>
-            <ixy>0</ixy>
-            <ixz>0</ixz>
-            <iyy>1</iyy>
-            <iyz>0</iyz>
-            <izz>1</izz>
-          </inertia>
-          <mass>1</mass>
-        </inertial>
-        <kinematic>0</kinematic>
-        <gravity>1</gravity>
-      </link>
-      <pose frame=''>1.324 2.187 0 0 -0 0</pose>
-    </model>
+    <include>
+      <uri>model://Cow1</uri>   
+      <pose> 2.76 1.05872 0.11 0 -0 1.58 </pose> 
+    </include>
 
+    <include>
+      <uri>model://Dog</uri>   
+      <pose> 0.64 1.86072 0.08 0 -0 1.58 </pose> 
+    </include>
+
+    <include>
+      <uri>model://Dog1</uri>   
+      <pose> 1.702 2.3975 0.102 0 -0 1.58 </pose> 
+    </include>
+
+    <include>
+      <uri>model://Bear</uri>   
+      <pose> 0.8039 0.68072 0.09 0 -0 0 </pose> 
+    </include>
+
+    <include>
+      <uri>model://Giraffe</uri>   
+      <pose> 0.8039 0.68072 0.09 0 -0 0 </pose> 
+    </include>
+
+    <include>
+      <uri>model://Zebra</uri>   
+      <pose> 0.4439 2.7503 0.18 0 -0 0.94 </pose> 
+    </include>
+  
+    <include>
+      <uri>model://Elephant</uri>   
+      <pose> 1.8939 0.98072 0.1 0 -0 0.67 </pose> 
+    </include>
 
     <gravity>0 0 -9.8</gravity>
     <magnetic_field>6e-06 2.3e-05 -4.2e-05</magnetic_field>
@@ -1527,7 +1210,7 @@
     </state>
     <gui fullscreen='0'>
       <camera name='user_camera'>
-        <pose frame=''>4.6164 1.09568 3.56578 0 0.963643 2.89619</pose>
+        <pose frame=''>3.83451 2.65732 3.83338 0 1.11164 -2.687</pose>
         <view_controller>orbit</view_controller>
         <projection_type>perspective</projection_type>
       </camera>
