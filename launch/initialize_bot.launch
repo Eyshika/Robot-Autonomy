@@ -8,6 +8,7 @@
     <arg name="yaw" default="4.71" />
     <arg name="model" default="robot_autonomy"/>
     <arg name="sim" default="$(arg sim)"/>
+    <arg name="navigator" value="navigator.py"/>
   </include>
 
 </launch>
