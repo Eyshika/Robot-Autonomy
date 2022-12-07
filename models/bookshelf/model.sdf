@@ -1,21 +1,21 @@
 <?xml version="1.0" ?>
 <sdf version="1.5">
-  <model name="bookshelf">
-    <static>true</static>
-    <link name="link">
+  <model name='bookshelf'>
+    <static>1</static>
+    <link name='link'>
       <inertial>
-        <mass>1.0</mass>
+        <mass>1</mass>
       </inertial>
-      <collision name="back">
-        <pose>0 0.005 0.6 0 0 0</pose>
+      <collision name='back'>
+        <pose frame=''>0 0.005 0.6 0 -0 0</pose>
         <geometry>
           <box>
             <size>0.9 0.01 1.2</size>
           </box>
         </geometry>
       </collision>
-      <visual name="visual1">
-        <pose>0 0.005 0.6 0 0 0</pose>
+      <visual name='visual1'>
+        <pose frame=''>0 0.005 0.6 0 -0 0</pose>
         <geometry>
           <box>
             <size>0.9 0.01 1.2</size>
@@ -28,16 +28,16 @@
           </script>
         </material>
       </visual>
-      <collision name="left_side">
-        <pose>0.45 -0.195 0.6 0 0 0</pose>
+      <collision name='left_side'>
+        <pose frame=''>0.45 -0.195 0.6 0 -0 0</pose>
         <geometry>
           <box>
             <size>0.02 0.4 1.2</size>
           </box>
         </geometry>
       </collision>
-      <visual name="visual2">
-        <pose>0.45 -0.195 0.6 0 0 0</pose>
+      <visual name='visual2'>
+        <pose frame=''>0.45 -0.195 0.6 0 -0 0</pose>
         <geometry>
           <box>
             <size>0.02 0.4 1.2</size>
@@ -50,16 +50,16 @@
           </script>
         </material>
       </visual>
-      <collision name="right_side">
-        <pose>-0.45 -0.195 0.6 0 0 0</pose>
+      <collision name='right_side'>
+        <pose frame=''>-0.45 -0.195 0.6 0 -0 0</pose>
         <geometry>
           <box>
             <size>0.02 0.4 1.2</size>
           </box>
         </geometry>
       </collision>
-      <visual name="visual3">
-        <pose>-0.45 -0.195 0.6 0 0 0</pose>
+      <visual name='visual3'>
+        <pose frame=''>-0.45 -0.195 0.6 0 -0 0</pose>
         <geometry>
           <box>
             <size>0.02 0.4 1.2</size>
@@ -72,16 +72,16 @@
           </script>
         </material>
       </visual>
-      <collision name="bottom">
-        <pose>0 -0.195 0.03 0 0 0</pose>
+      <collision name='bottom'>
+        <pose frame=''>0 -0.195 0.03 0 -0 0</pose>
         <geometry>
           <box>
             <size>0.88 0.4 0.06</size>
           </box>
         </geometry>
       </collision>
-      <visual name="visual4">
-        <pose>0 -0.195 0.03 0 0 0</pose>
+      <visual name='visual4'>
+        <pose frame=''>0 -0.195 0.03 0 -0 0</pose>
         <geometry>
           <box>
             <size>0.88 0.4 0.06</size>
@@ -94,16 +94,16 @@
           </script>
         </material>
       </visual>
-      <collision name="top">
-        <pose>0 -0.195 1.19 0 0 0</pose>
+      <collision name='top'>
+        <pose frame=''>0 -0.195 1.19 0 -0 0</pose>
         <geometry>
           <box>
             <size>0.88 0.4 0.02</size>
           </box>
         </geometry>
       </collision>
-      <visual name="visual5">
-        <pose>0 -0.195 1.19 0 0 0</pose>
+      <visual name='visual5'>
+        <pose frame=''>0 -0.195 1.19 0 -0 0</pose>
         <geometry>
           <box>
             <size>0.88 0.4 0.02</size>
@@ -116,16 +116,16 @@
           </script>
         </material>
       </visual>
-      <collision name="low_shelf">
-        <pose>0 -0.195 0.43 0 0 0</pose>
+      <collision name='low_shelf'>
+        <pose frame=''>0 -0.195 0.43 0 -0 0</pose>
         <geometry>
           <box>
             <size>0.88 0.4 0.02</size>
           </box>
         </geometry>
       </collision>
-      <visual name="visual6">
-        <pose>0 -0.195 0.43 0 0 0</pose>
+      <visual name='visual6'>
+        <pose frame=''>0 -0.195 0.43 0 -0 0</pose>
         <geometry>
           <box>
             <size>0.88 0.4 0.02</size>
@@ -138,16 +138,16 @@
           </script>
         </material>
       </visual>
-      <collision name="high_shelf">
-        <pose>0 -0.195 0.8 0 0 0</pose>
-        <geometry>
-          <box>
-            <size>0.88 0.4 0.02</size>
-          </box>
-        </geometry>
-      </collision>
-      <visual name="visual7">
-        <pose>0 -0.195 0.8 0 0 0</pose>
+        <collision name='high_shelf'>
+          <pose frame=''>0 -0.195 0.8 0 -0 0</pose>
+          <geometry>
+            <box>
+              <size>0.88 0.4 0.02</size>
+            </box>
+          </geometry>
+        </collision>
+      <visual name='visual7'>
+        <pose frame=''>0 -0.195 0.8 0 -0 0</pose>
         <geometry>
           <box>
             <size>0.88 0.4 0.02</size>
@@ -161,5 +161,6 @@
         </material>
       </visual>
     </link>
+    <pose frame=''>4.72359 5.17921 0 0 -0 0</pose>
   </model>
 </sdf>
