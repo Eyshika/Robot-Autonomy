@@ -18,6 +18,7 @@ def compute_smoothed_traj(path, V_des, k, alpha, dt):
         dt (float): Timestep used in final smooth trajectory
     Outputs:
         t_smoothed (np.array [N]): Associated trajectory times
+        
         traj_smoothed (np.array [N,7]): Smoothed trajectory
     Hint: Use splrep and splev from scipy.interpolate
     """

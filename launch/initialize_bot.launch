@@ -11,5 +11,10 @@
     <arg name="sim" default="$(arg sim)"/>
     <arg name="navigator" default="navigator.py"/>  
   </include>
+  
+
+  <!-- <node pkg="robot_autonomy" type="navigator.py" name="navigator" output="screen" /> -->
+  <node pkg="robot_autonomy" type="detector_mobilenet.py" name="detector_mobilenet" output="screen" />
+  <node pkg="robot_autonomy" type="detected_positions.py" name="detected_positions" output="screen" />
 
 </launch>
