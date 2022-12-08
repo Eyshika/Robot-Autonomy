@@ -1125,38 +1125,38 @@
     <model name ='Cat1'>
       <include>
         <uri>model://Tag0</uri>   
-        <pose> 0.119 0.08 0.081 0 0 </pose> 
+        <pose> 0.119 0.18 0.0 0 0 </pose> 
       </include>
     </model>
 
     <include>
       <uri>model://Cow</uri>   
-      <pose> 2.7239 2.05072 0.084 0 -0 1.58 </pose> 
+      <pose> 2.7239 2.05072 0.182 0 -0 1.58 </pose> 
     </include>
 
     <include>
       <uri>model://Cow1</uri>   
-      <pose> 2.76 1.05872 0.11 0 -0 1.58 </pose> 
+      <pose> 2.76 1.05872 0.18 0 -0 1.58 </pose> 
     </include>
 
     <include>
       <uri>model://Dog</uri>   
-      <pose> 0.64 1.86072 0.08 0 -0 1.58 </pose> 
+      <pose> 0.64 1.86072 0.18 0 -0 1.58 </pose> 
     </include>
 
     <include>
       <uri>model://Dog1</uri>   
-      <pose> 1.702 2.3975 0.102 0 -0 1.58 </pose> 
+      <pose> 1.702 2.3975 0.18 0 -0 1.58 </pose> 
     </include>
 
     <include>
       <uri>model://Bear</uri>   
-      <pose> 0.8039 0.68072 0.09 0 -0 0 </pose> 
+      <pose> 0.8039 0.68072 0.18 0 -0 0 </pose> 
     </include>
 
     <include>
       <uri>model://Giraffe</uri>   
-      <pose> 0.8039 0.68072 0.09 0 -0 0 </pose> 
+      <pose> 3.0039 2.38072 0.18 0 -0 0 </pose> 
     </include>
 
     <include>
@@ -1166,7 +1166,7 @@
   
     <include>
       <uri>model://Elephant</uri>   
-      <pose> 1.8939 0.98072 0.1 0 -0 0.67 </pose> 
+      <pose> 1.911 0.725 0.1763 0 -0 0.67 </pose> 
     </include>
 
     <gravity>0 0 -9.8</gravity>
