@@ -9,5 +9,10 @@
     <arg name="model" default="robot_autonomy"/>
     <arg name="sim" default="$(arg sim)"/>
   </include>
+  
+
+  <!-- <node pkg="robot_autonomy" type="navigator.py" name="navigator" output="screen" /> -->
+  <node pkg="robot_autonomy" type="detector_mobilenet.py" name="detector_mobilenet" output="screen" />
+  <node pkg="robot_autonomy" type="detected_positions.py" name="detected_positions" output="screen" />
 
 </launch>

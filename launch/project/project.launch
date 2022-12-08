@@ -12,4 +12,6 @@
   </include>
 
   <node pkg="robot_autonomy" type="navigator.py" name="navigator" output="screen" />
+
+  <node pkg="robot_autonomy" type="detector_mobilenet.py" name="detector_mobilenet" output="screen" />
 </launch>
