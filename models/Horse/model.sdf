@@ -1,13 +1,13 @@
 <?xml version="1.0" ?>
 <sdf version="1.5">
-  <model name="Tag0">
+  <model name="Horse">
     <static>true</static>
     <link name="link">
       <pose>0 0 0 0 0 0</pose>
       <collision name="collision">
         <geometry>
           <box>
-            <size>.1615 0.152 .3642</size>
+            <size>.1615 0.011 .3642</size>
           </box>
         </geometry>
       </collision>
@@ -15,14 +15,14 @@
         <cast_shadows>false</cast_shadows>
         <geometry>
           <box>
-            <size>.1615 0.152 .3642</size>
+            <size>.1615 0.011 .3642</size>
           </box>
         </geometry>
         <material>
           <script>
-            <uri>model://Tag0/materials/scripts</uri>
-            <uri>model://Tag0/materials/textures</uri>
-            <name>vrc/Tag0</name>
+            <uri>model://Horse/materials/scripts</uri>
+            <uri>model://Horse/materials/textures</uri>
+            <name>vrc/Horse</name>
           </script>
         </material>
       </visual>

@@ -1,6 +1,6 @@
 <?xml version="1.0" ?>
 <sdf version="1.5">
-  <model name="Elephant">
+  <model name="Sheep1">
     <static>true</static>
     <link name="link">
       <pose>0 0 0 0 0 0</pose>
@@ -20,9 +20,9 @@
         </geometry>
         <material>
           <script>
-            <uri>model://Elephant/materials/scripts</uri>
-            <uri>model://Elephant/materials/textures</uri>
-            <name>vrc/Elephant</name>
+            <uri>model://Sheep1/materials/scripts</uri>
+            <uri>model://Sheep1/materials/textures</uri>
+            <name>vrc/Sheep1</name>
           </script>
         </material>
       </visual>

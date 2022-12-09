@@ -6,7 +6,7 @@ from utils import plot_line_segments
 class AStar(object):
     """Represents a motion planning problem to be solved using A*"""
 
-    def __init__(self, statespace_lo, statespace_hi, x_init, x_goal, occupancy, resolution=0.1)->None:
+    def __init__(self, statespace_lo, statespace_hi, x_init, x_goal, occupancy, resolution=0.05)->None:
         self.statespace_lo = np.array(statespace_lo)         # state space lower bound (e.g., [-5, -5])
         self.statespace_hi = np.array(statespace_hi)         # state space upper bound (e.g., [5, 5])
         self.occupancy = occupancy                 # occupancy grid (a DetOccupancyGrid2D object)

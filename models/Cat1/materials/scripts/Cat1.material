@@ -1,4 +1,4 @@
-material vrc/Tag0
+material vrc/Cat1
 {
 	receive_shadows off
 	technique

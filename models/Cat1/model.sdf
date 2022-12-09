@@ -1,13 +1,13 @@
 <?xml version="1.0" ?>
 <sdf version="1.5">
-  <model name="Elephant">
+  <model name="Cat1">
     <static>true</static>
     <link name="link">
       <pose>0 0 0 0 0 0</pose>
       <collision name="collision">
         <geometry>
           <box>
-            <size>.1615 0.011 .3642</size>
+            <size>.44 0.44 .02</size>
           </box>
         </geometry>
       </collision>
@@ -15,14 +15,14 @@
         <cast_shadows>false</cast_shadows>
         <geometry>
           <box>
-            <size>.1615 0.011 .3642</size>
+            <size>.44 0.44 .02</size>
           </box>
         </geometry>
         <material>
           <script>
-            <uri>model://Elephant/materials/scripts</uri>
-            <uri>model://Elephant/materials/textures</uri>
-            <name>vrc/Elephant</name>
+            <uri>model://Cat1/materials/scripts</uri>
+            <uri>model://Cat1/materials/textures</uri>
+            <name>vrc/Cat1</name>
           </script>
         </material>
       </visual>
