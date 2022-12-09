@@ -1,9 +1,10 @@
 <launch>
+  <env name="GAZEBO_MODEL_PATH" value="$(find robot_autonomy)/models"/>
   <arg name="sim" default="true"/>
 
   <include file="$(find robot_autonomy)/launch/root.launch">
-    <arg name="x_pos" default="3.42"/>
-    <arg name="y_pos" default="2.83"/>
+    <arg name="x_pos" default="4.46"/>
+    <arg name="y_pos" default="3.34"/>
     <arg name="z_pos" default="0.0"/>
     <arg name="yaw" default="4.71" />
     <arg name="model" default="robot_autonomy"/>
