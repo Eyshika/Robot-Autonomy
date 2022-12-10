@@ -33,7 +33,6 @@ class DetectedPositions:
                 tf.ExtrapolationException,
             ) as e:
                 self.current_plan = []
-                rospy.loginfo("Navigator: waiting for state info")
                 pass
             rate.sleep()
             for i in self.detect_obj.items(): 
@@ -53,7 +52,7 @@ class DetectedPositions:
             thetamid = (d.thetaleft-d.thetaright)/2 + d.thetaright
             if (thetamid > 2*np.pi):
                 thetamid -= 2*np.pi
-            print("**** tl:",d.thetaleft,"tr:",d.thetaright,"tm:",thetamid)
+            #print("**** tl:",d.thetaleft,"tr:",d.thetaright,"tm:",thetamid)
 
             detect_theta = thetamid
             R_mat = np.array([[np.cos(detect_theta), -np.sin(detect_theta)], 
