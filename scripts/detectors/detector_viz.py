@@ -70,13 +70,14 @@ class DetectorViz:
 
     def camera_common(self, img, img_bgr8):
         (img_h,img_w,img_c) = img.shape
-        draw_color = (0,255,0)
+        draw_color = (0,int(255/ob_msg.confidence),0)
         if self.detected_objects is not None:
             for ob_msg in self.detected_objects.ob_msgs:
                 ymin, xmin, ymax, xmax = [int(x) for x in ob_msg.corners]
                 cv2.rectangle(img_bgr8, (xmin,ymin), (xmax,ymax), draw_color, 2)
-                # cool add-on by student in 2018 class
-                cv2.putText(img_bgr8, ob_msg.name + ":" + str(round(ob_msg.confidence, 2)), (xmin, ymin+13), CV2_FONT, .5, draw_color)
+                # adjustment by team awesome
+                message = ob_msg.name + ":" + str(round(ob_msg.confidence, 2))
+                cv2.putText(img_bgr8, message, (xmin, ymin+13), cv2.FONT_HERSHEY_COMPLEX, .5, draw_color)
         self.viz_pub.publish(self.bridge.cv2_to_compressed_imgmsg(img_bgr8))
 
 
