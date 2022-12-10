@@ -1,17 +1,21 @@
 #!/usr/bin/env python3
 
 import rospy
-from asl_turtlebot.msg import DetectedObject
+from asl_turtlebot.msg import DetectedObject, DetectedObjectList
+from std_msgs.msg import String
 import tf
 import numpy as np 
 
 class DetectedPositions: 
     def __init__(self, verbose = False): 
         rospy.init_node('detected_positions', anonymous=True)
-        rospy.Subscriber('/detector/detector.py', DetectedObject, self.detector_callback, queue_size=1)
+        rospy.Subscriber('/detector/objects', DetectedObjectList, self.detector_callback, queue_size=1)
+        self.pub = rospy.Publisher('/detector/detected_objs', String, queue_size=10)
         self.trans_listener = tf.TransformListener()
         self.detect_obj = {} # coordinates (keys) to object names (values)
-        self.tol = 1
+        self.tol = .2
+        self.pub.publish("INIT!")
+
     def run(self): 
         rate = rospy.Rate(10)
         while not rospy.is_shutdown(): 
@@ -32,30 +36,72 @@ class DetectedPositions:
                 rospy.loginfo("Navigator: waiting for state info")
                 pass
             rate.sleep()
+            for i in self.detect_obj.items(): 
+                self.pub.publish(str(i))
 
     def detector_callback(self, data):
+        for d in data.ob_msgs: 
+            if d.confidence < 0.9: 
+                continue
+            orig_heading = d.distance * np.array([np.cos(self.theta), np.sin(self.theta)])
+            rospy.loginfo(orig_heading)
 
-        orig_heading = np.array([np.cos(self.theta), np.sin(self.theta)])
-        detect_theta = data.thetaleft
-        R_mat = np.array([[np.cos(detect_theta), -np.sin(detect_theta)], 
-                           [np.sin(detect_theta), np.cos(detect_theta)]])
-        t = np.array([self.x, self.y])
-        low_row = np.array([0, 0, 0, 1])
-        orig_heading = np.append(orig_heading, 1)
-        up_row = np.hstack([R_mat, t])
-        rot_and_trans_mat = np.vstack([up_row, low_row])
-        world_coord = rot_and_trans_mat @ orig_heading
-        obj_loc = world_coord[:-1]
-        if self.check_existing(obj_loc): 
-            self.detect_obj[obj_loc] = data.name
-        rospy.loginfo("Detected object")
-        rospy.loginfo("at " + str(obj_loc))
-        rospy.loginfo("of type " + str(data.name))
+            # calculate thetamid
+            if (d.thetaleft < d.thetaright):
+                d.thetaleft += 2*np.pi
+            thetamid = (d.thetaleft-d.thetaright)/2 + d.thetaright
+            if (thetamid > 2*np.pi):
+                thetamid -= 2*np.pi
+            print("**** tl:",d.thetaleft,"tr:",d.thetaright,"tm:",thetamid)
+
+            detect_theta = thetamid
+            R_mat = np.array([[np.cos(detect_theta), -np.sin(detect_theta)], 
+                            [np.sin(detect_theta), np.cos(detect_theta)]])
+            rospy.loginfo(R_mat)
+            t = np.array([self.x, self.y])
+            rospy.loginfo(t)
+
+            low_row = np.array([0, 0, 1])
+            orig_heading = np.append(orig_heading, 1)
+            up_row = np.hstack([R_mat, t.reshape((2, 1))])
+            rot_and_trans_mat = np.vstack([up_row, low_row])
+            rospy.loginfo(rot_and_trans_mat)
+            world_coord = rot_and_trans_mat @ (orig_heading)
+            rospy.loginfo(world_coord)
+            world_coord = world_coord[:-1]
+            obj_loc = tuple(world_coord)
+            rospy.loginfo(obj_loc)
+            if obj_loc_exist := (self.check_existing(obj_loc)):
+                obj_names, count, _ = self.detect_obj[obj_loc_exist]
+                if d.name not in obj_names: 
+                    obj_names[d.name] = 0
+                obj_names[d.name] += 1
+                new_loc = (np.array(obj_loc_exist) * count + np.array(obj_loc)) / (count + 1)
+                new_loc = tuple(new_loc)
+                count += 1
+                self.detect_obj.pop(obj_loc_exist)
+                best_name_count = max(obj_names.values())
+                for i in obj_names.keys(): 
+                    if obj_names[i] == best_name_count:
+                        best_name = i
+                        break 
+                self.detect_obj[new_loc] = (obj_names, count, best_name)
+                
+
+            else:
+                rospy.loginfo(str(obj_loc_exist))
+                self.detect_obj[obj_loc] = ({d.name: 1}, 1, d.name)
+
+            rospy.loginfo("Detected object")
+            rospy.loginfo("at " + str(obj_loc))
+            rospy.loginfo("of type " + str(d.name))
 
     def check_existing(self, obj_loc):
         for k in self.detect_obj.keys(): 
-            if np.linalg.norm(obj_loc - k, ord=2) < self.tol: return False 
-        return True
+            if np.linalg.norm(np.array(obj_loc) - np.array(k), ord=2) < self.tol: 
+                rospy.loginfo(np.linalg.norm(np.array(obj_loc) - np.array(k), ord=2))
+                return k
+        return None
 
         
 

@@ -67,7 +67,7 @@ class Navigator:
         self.plan_start = [0.0, 0.0]
 
         # Robot limits
-        self.v_max = 0.2  # maximum velocity
+        self.v_max = 1  # maximum velocity
         self.om_max = 0.4  # maximum angular velocity
 
         self.v_des = 0.12  # desired cruising velocity
