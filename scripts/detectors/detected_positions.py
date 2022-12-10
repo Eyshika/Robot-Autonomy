@@ -43,8 +43,9 @@ class DetectedPositions:
         for d in data.ob_msgs: 
             if d.confidence < 0.9: 
                 continue
+
+            self.ascii_art(d.name)
             orig_heading = d.distance * np.array([np.cos(self.theta), np.sin(self.theta)])
-            rospy.loginfo(orig_heading)
 
             # calculate thetamid
             if (d.thetaleft < d.thetaright):
@@ -57,20 +58,15 @@ class DetectedPositions:
             detect_theta = thetamid
             R_mat = np.array([[np.cos(detect_theta), -np.sin(detect_theta)], 
                             [np.sin(detect_theta), np.cos(detect_theta)]])
-            rospy.loginfo(R_mat)
             t = np.array([self.x, self.y])
-            rospy.loginfo(t)
 
             low_row = np.array([0, 0, 1])
             orig_heading = np.append(orig_heading, 1)
             up_row = np.hstack([R_mat, t.reshape((2, 1))])
             rot_and_trans_mat = np.vstack([up_row, low_row])
-            rospy.loginfo(rot_and_trans_mat)
             world_coord = rot_and_trans_mat @ (orig_heading)
-            rospy.loginfo(world_coord)
             world_coord = world_coord[:-1]
             obj_loc = tuple(world_coord)
-            rospy.loginfo(obj_loc)
             if obj_loc_exist := (self.check_existing(obj_loc)):
                 obj_names, count, _ = self.detect_obj[obj_loc_exist]
                 if d.name not in obj_names: 
@@ -87,22 +83,34 @@ class DetectedPositions:
                         break 
                 self.detect_obj[new_loc] = (obj_names, count, best_name)
                 
-
             else:
-                rospy.loginfo(str(obj_loc_exist))
                 self.detect_obj[obj_loc] = ({d.name: 1}, 1, d.name)
 
-            rospy.loginfo("Detected object")
-            rospy.loginfo("at " + str(obj_loc))
-            rospy.loginfo("of type " + str(d.name))
 
     def check_existing(self, obj_loc):
         for k in self.detect_obj.keys(): 
             if np.linalg.norm(np.array(obj_loc) - np.array(k), ord=2) < self.tol: 
-                rospy.loginfo(np.linalg.norm(np.array(obj_loc) - np.array(k), ord=2))
                 return k
         return None
 
+    def ascii_art(self, name): 
+        if name == "cat":
+            catArt = """
+                    |\__/,|   (\\
+                    |_ _  |.--.) )   MEOW!
+                    ( T   )     /
+                    (((^_(((/(((_/
+                    """
+            rospy.loginfo(catArt)
+        elif name == "dog":
+            dogArt = """
+                    	 __
+                    (___()'`;  WOOF!
+                    /,    /`
+                    \\"--\\
+                    
+                    """
+            rospy.loginfo(dogArt)
         
 
 if __name__ == "__main__":
