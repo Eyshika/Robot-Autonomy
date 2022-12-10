@@ -1,7 +1,7 @@
 <sdf version='1.6'>
   <world name='default'>
     <light name='sun' type='directional'>
-      <cast_shadows>1</cast_shadows>
+      <cast_shadows>0</cast_shadows>
       <pose frame=''>0 0 10 0 -0 0</pose>
       <diffuse>0.8 0.8 0.8 1</diffuse>
       <specular>0.1 0.1 0.1 1</specular>
@@ -13,6 +13,20 @@
       </attenuation>
       <direction>-0.5 0.5 -1</direction>
     </light>
+    <light name='sun1' type='directional'>
+      <cast_shadows>0</cast_shadows>
+      <pose frame=''>0 4 10 0 -4 0</pose>
+      <diffuse>0.8 0.8 0.8 1</diffuse>
+      <specular>0.1 0.1 0.1 1</specular>
+      <attenuation>
+        <range>1000</range>
+        <constant>0.9</constant>
+        <linear>0.01</linear>
+        <quadratic>0.001</quadratic>
+      </attenuation>
+      <direction>-0.5 0.5 -1</direction>
+    </light>
+    
     <model name='ground_plane'>
       <static>1</static>
       <link name='link'>
@@ -1197,13 +1211,13 @@
 
     <include>
       <uri>model://Cow</uri>   
-      <pose> 3.2688 1.811 0.182 0 -0 1.58 </pose> 
+      <pose> 3.2588 2.3012 0.182 0 -0 1.58 </pose> 
     </include>
 
     
     <include>
       <uri>model://Cow1</uri>   
-      <pose> 3.267 0.9468 0.18 0 -0 1.58 </pose> 
+      <pose> 3.260 1.275 0.18 0 -0 1.58 </pose> 
     </include>
 
     <include>
@@ -1213,7 +1227,7 @@
 
     <include>
       <uri>model://Dog</uri>   
-      <pose> 1.1339 2.3163 0.198 0 -0 1.58 </pose> 
+      <pose> 1.1339 2.309 0.198 0 -0 1.58 </pose> 
     </include>
 
     <include>
@@ -1234,7 +1248,7 @@
 
     <include>
       <uri>model://Giraffe</uri>   
-      <pose> 2.2678 2.781 0.18 0 -0 0 </pose> 
+      <pose> 1.790 2.88631 0.245 0 -0 0 </pose> 
     </include>
 
     <include>
@@ -1254,17 +1268,17 @@
 
     <include>
       <uri>model://Sheep1</uri>   
-      <pose> 2.832 3.654 0.18 0 -0 0 </pose> 
+      <pose> 2.77 3.653 0.26 0 -0 0 </pose> 
     </include>
 
     <include>
       <uri>model://Zebra</uri>   
-      <pose> 0.4065 3.464 0.18 0 -0 0.94 </pose> 
+      <pose> 0.4065 3.464 0.2666 0 -0 0.94 </pose> 
     </include>
   
     <include>
       <uri>model://Elephant</uri>   
-      <pose> 1.885 0.772 0.1763 0 -0 0.071 </pose> 
+      <pose> 1.885 0.772 0.2632 0 -0 0.071 </pose> 
     </include>
 
     <gravity>0 0 -9.8</gravity>
