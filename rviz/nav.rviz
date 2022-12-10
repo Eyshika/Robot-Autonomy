@@ -68,6 +68,8 @@ Visualization Manager:
       Queue Size: 2
       Transport Hint: raw
       Unreliable: false
+      Use Fixed Frame: true
+      Use rainbow: true
       Value: true
       Visibility:
         Grid: true
@@ -285,6 +287,13 @@ Visualization Manager:
         Stereo Focal Distance: 1
         Swap Stereo Eyes: false
         Value: false
+      Field of View: 0.7853981852531433
+      Focal Point:
+        X: 2.1610119342803955
+        Y: 1.6807175874710083
+        Z: -2.0525918006896973
+      Focal Shape Fixed Size: true
+      Focal Shape Size: 0.05000000074505806
       Invert Z Axis: false
       Name: Current View
       Near Clip Distance: 0.009999999776482582
