@@ -27,7 +27,10 @@ PATH_TO_LABELS = os.path.join(
 # False will use a very simple color thresholding to detect stop signs only
 USE_PYTORCH = True
 # minimum score for positive detection
-MIN_SCORE = 0.5
+MIN_SCORE = 0.9
+# classes we want to detect, ignore all others
+DETECTED_CLASSES = ["person", "traffic light", "stop sign", "bird", "cat", "dog",
+                    "horse", "sheep", "cow", "elephant", "bear", "zebra", "giraffe"]
 
 
 def load_object_labels(filename):
@@ -149,7 +152,7 @@ class Detector:
         f_num = 0
 
         for i in range(int(num)):
-            if scores[i] >= MIN_SCORE:
+            if scores[i] >= MIN_SCORE and classes[i] in DETECTED_CLASSES:
                 f_scores.append(scores[i])
                 f_boxes.append(boxes[i])
                 f_classes.append(int(classes[i]))

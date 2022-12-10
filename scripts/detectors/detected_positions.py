@@ -40,8 +40,9 @@ class DetectedPositions:
 
     def detector_callback(self, data):
         for d in data.ob_msgs: 
-            if d.confidence < 0.9: 
-                continue
+            # WS: moved this to filter() in detector_mobilenet.py
+            # if d.confidence < 0.9: 
+            #     continue
 
             self.ascii_art(d.name)
             orig_heading = d.distance * np.array([np.cos(self.theta), np.sin(self.theta)])
