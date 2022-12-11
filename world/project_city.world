@@ -2,7 +2,7 @@
   <world name='default'>
     <light name='sun' type='directional'>
       <cast_shadows>0</cast_shadows>
-      <pose frame=''>0 0 10 0 -0 0</pose>
+      <pose frame=''>0 2 3 -1.134 0.7754 0.0872</pose>
       <diffuse>0.8 0.8 0.8 1</diffuse>
       <specular>0.1 0.1 0.1 1</specular>
       <attenuation>
@@ -15,7 +15,7 @@
     </light>
     <light name='sun1' type='directional'>
       <cast_shadows>0</cast_shadows>
-      <pose frame=''>0 4 10 0 -4 0</pose>
+      <pose frame=''>2.4452 4.85 3 -1.865712 0.607529 -0.578042</pose>
       <diffuse>0.8 0.8 0.8 1</diffuse>
       <specular>0.1 0.1 0.1 1</specular>
       <attenuation>
@@ -26,7 +26,20 @@
       </attenuation>
       <direction>-0.5 0.5 -1</direction>
     </light>
-    
+    <light name='sun2' type='directional'>
+      <cast_shadows>0</cast_shadows>
+      <pose frame=''>2.13441 -0.95 2.429 -3.072031 -0.758396 2.090716</pose>
+      <diffuse>0.8 0.8 0.8 1</diffuse>
+      <specular>0.1 0.1 0.1 1</specular>
+      <attenuation>
+        <range>1000</range>
+        <constant>0.9</constant>
+        <linear>0.01</linear>
+        <quadratic>0.001</quadratic>
+      </attenuation>
+      <direction>0. 0. -1</direction>
+    </light>
+
     <model name='ground_plane'>
       <static>1</static>
       <link name='link'>
@@ -971,7 +984,7 @@
             <geometry>
                 <mesh>
                 <uri>model://stop_sign/meshes/stop_sign.dae</uri>
-                <scale>.4 .2 .2</scale>
+                <scale>.5 .3 .2</scale>
                 </mesh>
             </geometry>
             <max_contacts>10</max_contacts>
@@ -995,7 +1008,7 @@
           <geometry>
             <mesh>
               <uri>model://stop_sign/meshes/stop_sign.dae</uri>
-              <scale>.4 .2 .2</scale>
+              <scale>.5 .3 .2</scale>
             </mesh>
           </geometry>
           <material>
@@ -1021,7 +1034,7 @@
         <kinematic>0</kinematic>
         <gravity>1</gravity>
       </link>
-      <pose frame=''>3.2752 0.7381 0.00005 -0.001 -0.0011 1.602</pose>
+      <pose frame=''>3.27582 0.7182 0.00002 -0.001 -0.0011 1.602</pose>
     </model>
 
     <model name='Stop Sign 2'>
@@ -1031,7 +1044,7 @@
             <geometry>
                 <mesh>
                 <uri>model://stop_sign/meshes/stop_sign.dae</uri>
-                <scale>.3 .2 .2</scale>
+                <scale>.5 .3 .2</scale>
                 </mesh>
             </geometry>
             <max_contacts>10</max_contacts>
@@ -1055,7 +1068,7 @@
           <geometry>
             <mesh>
               <uri>model://stop_sign/meshes/stop_sign.dae</uri>
-              <scale>.3 .2 .2</scale>
+              <scale>.5 .3 .2</scale>
             </mesh>
           </geometry>
           <material>
@@ -1081,7 +1094,7 @@
         <kinematic>0</kinematic>
         <gravity>1</gravity>
       </link>
-      <pose frame=''>.76911 2.2130 0.00105 -0.001 -0.0011 1.602</pose>
+      <pose frame=''>.77106 2.1503 0.0098 -0.001 -0.0011 1.602</pose>
     </model>
 
     <model name='Stop Sign 3'>
@@ -1091,7 +1104,7 @@
             <geometry>
                 <mesh>
                 <uri>model://stop_sign/meshes/stop_sign.dae</uri>
-                <scale>.3 .2 .2</scale>
+                <scale>.5 .3 .2</scale>
                 </mesh>
             </geometry>
             <max_contacts>10</max_contacts>
@@ -1115,7 +1128,7 @@
           <geometry>
             <mesh>
               <uri>model://stop_sign/meshes/stop_sign.dae</uri>
-              <scale>.4 .2 .2</scale>
+              <scale>.5 .3 .2</scale>
             </mesh>
           </geometry>
           <material>
@@ -1141,7 +1154,7 @@
         <kinematic>0</kinematic>
         <gravity>1</gravity>
       </link>
-      <pose frame=''>0.88311 0.638 0.00105 0.004 0.005 1.5989</pose>
+      <pose frame=''>0.88412 0.6018 0.00123 0.004 0.005 1.5989</pose>
     </model>
 
     <model name='Stop Sign 4'>
@@ -1151,7 +1164,7 @@
             <geometry>
                 <mesh>
                 <uri>model://stop_sign/meshes/stop_sign.dae</uri>
-                <scale>.4 .2 .2</scale>
+                <scale>.5 .3 .2</scale>
                 </mesh>
             </geometry>
             <max_contacts>10</max_contacts>
@@ -1175,7 +1188,7 @@
           <geometry>
             <mesh>
               <uri>model://stop_sign/meshes/stop_sign.dae</uri>
-              <scale>.4 .2 .2</scale>
+              <scale>.5 .3 .2</scale>
             </mesh>
           </geometry>
           <material>
@@ -1201,7 +1214,7 @@
         <kinematic>0</kinematic>
         <gravity>1</gravity>
       </link>
-      <pose frame=''>3.165 2.936 0.00105 0.0011 -0.00009 -0.0493</pose>
+      <pose frame=''>3.097998 2.936 0.001044 0.0011 -0.00009 -0.0493</pose>
     </model>
 
     <include>
@@ -1211,7 +1224,7 @@
 
     <include>
       <uri>model://Cow</uri>   
-      <pose> 3.2588 2.3012 0.182 0 -0 1.58 </pose> 
+      <pose> 3.269961 2.3012 0.182 0 -0 1.58 </pose> 
     </include>
 
     
@@ -1227,17 +1240,17 @@
 
     <include>
       <uri>model://Dog</uri>   
-      <pose> 1.1339 2.309 0.198 0 -0 1.58 </pose> 
+      <pose> 1.1339 2.309 0.2426 0 -0 1.58 </pose> 
     </include>
 
     <include>
       <uri>model://Dog1</uri>   
-      <pose> 1.530 1.4436 0.18 0 -0 1.58 </pose> 
+      <pose> 1.530 1.4436 0.2397 0 -0 1.58 </pose> 
     </include>
 
     <include>
       <uri>model://Bear</uri>   
-      <pose> 1.0289 0.7703 0.18 0 -0 0 </pose> 
+      <pose>0.913319 1.07262 0.18521 0 -0 -1.507578 </pose> 
     </include>
 
     <include>
@@ -1253,12 +1266,12 @@
 
     <include>
       <uri>model://Horse</uri>   
-      <pose> 3.6351 0.881 0.18 0 -0 0 </pose> 
+      <pose> 3.581 0.881 0.2494 0 -0 0 </pose> 
     </include>
 
     <include>
       <uri>model://Horse1</uri>   
-      <pose> 3.5537 2.931 0.18 0 -0 0 </pose> 
+      <pose> 3.5537 2.931 0.2545 0 -0 0 </pose> 
     </include>
 
     <include>

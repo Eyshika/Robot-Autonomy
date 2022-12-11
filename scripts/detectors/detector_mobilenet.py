@@ -28,6 +28,8 @@ PATH_TO_LABELS = os.path.join(
 USE_PYTORCH = True
 # minimum score for positive detection
 MIN_SCORE = 0.5
+# classes we want to detect, ignore all others
+DETECTED_CLASSES = [1, 13, 17, 18, 19, 20, 21, 22, 23, 24, 25]
 
 
 def load_object_labels(filename):
@@ -149,7 +151,7 @@ class Detector:
         f_num = 0
 
         for i in range(int(num)):
-            if scores[i] >= MIN_SCORE:
+            if scores[i] >= MIN_SCORE and classes[i] in DETECTED_CLASSES:
                 f_scores.append(scores[i])
                 f_boxes.append(boxes[i])
                 f_classes.append(int(classes[i]))
@@ -256,9 +258,11 @@ class Detector:
                 xcen = int(0.5 * (xmax - xmin) + xmin)
                 ycen = int(0.5 * (ymax - ymin) + ymin)
 
-                cv2.rectangle(
-                    img_bgr8, (xmin, ymin), (xmax, ymax), (255, 0, 0), 2
-                )
+                # annotate the image
+                draw_color = (0,int(255/sc),0)
+                cv2.rectangle(img_bgr8, (xmin, ymin), (xmax, ymax), draw_color, 2)
+                message = self.object_labels[cl] + ":" + str(round(sc, 2))
+                cv2.putText(img_bgr8, message, (xmin, ymin+13), cv2.FONT_HERSHEY_SIMPLEX, .5, draw_color)
 
                 # computes the vectors in camera frame corresponding to each sides of the box
                 rayleft = self.project_pixel_to_ray(xmin, ycen)

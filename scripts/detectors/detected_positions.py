@@ -1,16 +1,19 @@
 #!/usr/bin/env python3
 
 import rospy
-from asl_turtlebot.msg import DetectedObject, DetectedObjectList
+from robot_autonomy.msg import DetectedObject, DetectedObjectList
 from std_msgs.msg import String
 import tf
 import numpy as np 
+from robot_autonomy.msg import LocObject, LocObjectList
 
 class DetectedPositions: 
     def __init__(self, verbose = False): 
         rospy.init_node('detected_positions', anonymous=True)
         rospy.Subscriber('/detector/objects', DetectedObjectList, self.detector_callback, queue_size=1)
         self.pub = rospy.Publisher('/detector/detected_objs', String, queue_size=10)
+        self.pub_clean = rospy.Publisher('/detector/detected_objs_clean', LocObjectList, queue_size=10)
+        self.pub_list = LocObjectList()
         self.trans_listener = tf.TransformListener()
         self.detect_obj = {} # coordinates (keys) to object names (values)
         self.tol = .2
@@ -37,10 +40,19 @@ class DetectedPositions:
             rate.sleep()
             for i in self.detect_obj.items(): 
                 self.pub.publish(str(i))
+            self.pub_list = LocObjectList()
+            for i in self.detect_obj.keys(): 
+                obj = LocObject()
+                obj.x, obj.y = i
+                obj.name = self.detect_obj[i][2]
+                self.pub_list.objs.append(obj) 
+            self.pub_clean.publish(self.pub_list)
+                
+
 
     def detector_callback(self, data):
         for d in data.ob_msgs: 
-            if d.confidence < 0.9: 
+            if d.confidence < 0.8: 
                 continue
 
             self.ascii_art(d.name)
@@ -84,6 +96,7 @@ class DetectedPositions:
                 
             else:
                 self.detect_obj[obj_loc] = ({d.name: 1}, 1, d.name)
+                # rospy.loginfo("Detected Objects: %s"%self.detect_obj)
 
 
     def check_existing(self, obj_loc):
