@@ -9,12 +9,18 @@
     <arg name="yaw" default="4.71" />
     <arg name="model" default="robot_autonomy"/>
     <arg name="sim" default="$(arg sim)"/>
-    <arg name="navigator" default="navigator.py"/>  
+    <!-- <arg name="navigator" default="navigator.py"/>   -->
   </include>
   
-
-  <!-- <node pkg="robot_autonomy" type="navigator.py" name="navigator" output="screen" /> -->
+  <!-- <node pkg="robot_autonomy" type="navigator.py" name="navigator" output="screen" >
+    <param name = "Cow" value=[0.2, 0.2, 0.2]/>
+    <param name = "Cat" value=[]/>
+    <param name = "Dog"
+  </node> -->
+  <node pkg="robot_autonomy" type="navigator.py" name="navigator"/> <!-- launch-prefix="gnome-terminal -->
   <node pkg="robot_autonomy" type="detector_mobilenet.py" name="detector_mobilenet" output="screen" />
   <node pkg="robot_autonomy" type="detected_positions.py" name="detected_positions" output="screen" />
+  <node pkg="robot_autonomy" type="detector_rviz_marker.py" name="detector_rviz_marker" output="screen" />
+  <!-- <node pkg="robot_autonomy" type="rescue_command.py" name="rescue_command" output="screen" /> -->
 
 </launch>

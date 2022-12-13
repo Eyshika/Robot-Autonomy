@@ -1,0 +1,1 @@
+LocObject[] objs

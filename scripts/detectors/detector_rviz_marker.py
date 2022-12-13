@@ -29,8 +29,8 @@ class DetectorRvizMarker:
             marker.header.frame_id = "map"
             marker.id = n
             marker.type = 2 #sphere
-            marker.pose.position.x = det.x
-            marker.pose.position.y = det.y
+            marker.pose.position.x = float(det.x)
+            marker.pose.position.y = float(det.y)
             marker.pose.position.z = 0.2
             marker.scale.x = 0.2
             marker.scale.y = 0.2
@@ -46,8 +46,8 @@ class DetectorRvizMarker:
             markerTxt.id = n+100
             markerTxt.type = 9 #text
             markerTxt.text = det.name
-            markerTxt.pose.position.x = det.x
-            markerTxt.pose.position.y = det.y
+            markerTxt.pose.position.x = float(det.x)
+            markerTxt.pose.position.y = float(det.y)
             markerTxt.pose.position.z = 0.5
             markerTxt.scale.z = 0.2 # z used for height of uppercase A
             markerTxt.color.a = 1.0 # alpha

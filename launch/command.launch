@@ -1,0 +1,4 @@
+<launch>
+    <node pkg="robot_autonomy" type="rescue_command.py" name="rescue_command" output="screen" />
+
+</launch>

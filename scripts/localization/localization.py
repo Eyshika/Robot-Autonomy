@@ -54,7 +54,7 @@ class LocalizationVisualizer:
 
     def __init__(self):
         rospy.init_node('turtlebot_localization')
-        self.params = LocalizationParams(verbose=True)
+        self.params = LocalizationParams(verbose=False)
         
         ## Use simulation time (i.e. get time from rostopic /clock)
         rospy.set_param('use_sim_time', 'true')

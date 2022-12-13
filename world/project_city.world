@@ -917,65 +917,6 @@
       <pose frame=''>2.2576 2.483 0 0 -0 0.824</pose>
     </model>
 
-    <model name='Fire Hydrant'>
-      <link name='link'>
-        <collision name='collision'>
-          <geometry>
-            <mesh>
-              <uri>model://fire_hydrant/meshes/fire_hydrant.dae</uri>
-              <scale>.4 .2 .2</scale>
-            </mesh>
-          </geometry>
-          <max_contacts>10</max_contacts>
-          <surface>
-            <contact>
-              <ode/>
-            </contact>
-            <bounce/>
-            <friction>
-              <torsional>
-                <ode/>
-              </torsional>
-              <ode>
-                <mu>0.2</mu>
-                <mu2>0.2</mu2>
-              </ode>
-            </friction>
-          </surface>
-        </collision>
-        <visual name='visual'>
-          <geometry>
-            <mesh>
-              <uri>model://fire_hydrant/meshes/fire_hydrant.dae</uri>
-              <scale>.4 .2 .2</scale>
-            </mesh>
-          </geometry>
-          <material>
-            <script>
-              <uri>model://fire_hydrant/materials/scripts</uri>
-              <uri>model://fire_hydrant/materials/textures</uri>
-              <name>FireHydrant/Diffuse</name>
-            </script>
-          </material>
-        </visual>
-        <self_collide>0</self_collide>
-        <inertial>
-          <inertia>
-            <ixx>1</ixx>
-            <ixy>0</ixy>
-            <ixz>0</ixz>
-            <iyy>1</iyy>
-            <iyz>0</iyz>
-            <izz>1</izz>
-          </inertia>
-          <mass>1</mass>
-        </inertial>
-        <kinematic>0</kinematic>
-        <gravity>1</gravity>
-      </link>
-      <pose frame=''>2.4696 1.462 -0.005 0 -0 -0.3205</pose>
-    </model>
-
 
     <model name='Stop Sign 1'>
         <static>1</static>
@@ -984,7 +925,7 @@
             <geometry>
                 <mesh>
                 <uri>model://stop_sign/meshes/stop_sign.dae</uri>
-                <scale>.5 .3 .2</scale>
+                <scale>.3 .3 .2</scale>
                 </mesh>
             </geometry>
             <max_contacts>10</max_contacts>
@@ -1008,7 +949,7 @@
           <geometry>
             <mesh>
               <uri>model://stop_sign/meshes/stop_sign.dae</uri>
-              <scale>.5 .3 .2</scale>
+              <scale>.3 .3 .2</scale>
             </mesh>
           </geometry>
           <material>
@@ -1044,7 +985,7 @@
             <geometry>
                 <mesh>
                 <uri>model://stop_sign/meshes/stop_sign.dae</uri>
-                <scale>.5 .3 .2</scale>
+                <scale>.3 .3 .2</scale>
                 </mesh>
             </geometry>
             <max_contacts>10</max_contacts>
@@ -1068,7 +1009,7 @@
           <geometry>
             <mesh>
               <uri>model://stop_sign/meshes/stop_sign.dae</uri>
-              <scale>.5 .3 .2</scale>
+              <scale>.3 .3 .2</scale>
             </mesh>
           </geometry>
           <material>
@@ -1104,7 +1045,7 @@
             <geometry>
                 <mesh>
                 <uri>model://stop_sign/meshes/stop_sign.dae</uri>
-                <scale>.5 .3 .2</scale>
+                <scale>.3 .3 .2</scale>
                 </mesh>
             </geometry>
             <max_contacts>10</max_contacts>
@@ -1128,7 +1069,7 @@
           <geometry>
             <mesh>
               <uri>model://stop_sign/meshes/stop_sign.dae</uri>
-              <scale>.5 .3 .2</scale>
+              <scale>.3 .3 .2</scale>
             </mesh>
           </geometry>
           <material>
@@ -1164,7 +1105,7 @@
             <geometry>
                 <mesh>
                 <uri>model://stop_sign/meshes/stop_sign.dae</uri>
-                <scale>.5 .3 .2</scale>
+                <scale>.3 .3 .2</scale>
                 </mesh>
             </geometry>
             <max_contacts>10</max_contacts>
@@ -1188,7 +1129,7 @@
           <geometry>
             <mesh>
               <uri>model://stop_sign/meshes/stop_sign.dae</uri>
-              <scale>.5 .3 .2</scale>
+              <scale>.3 .3 .2</scale>
             </mesh>
           </geometry>
           <material>
@@ -1230,7 +1171,7 @@
     
     <include>
       <uri>model://Cow1</uri>   
-      <pose> 3.260 1.275 0.18 0 -0 1.58 </pose> 
+      <pose> 3.2577 1.5232 0.18 0 -0 1.58 </pose> 
     </include>
 
     <include>
@@ -1250,12 +1191,12 @@
 
     <include>
       <uri>model://Bear</uri>   
-      <pose>0.913319 1.07262 0.18521 0 -0 -1.507578 </pose> 
+      <pose>0.706629 3.614199 0.250 0 -0 -2.839837 </pose> 
     </include>
 
     <include>
       <uri>model://Bear1</uri>   
-      <pose> 0.02 1.79 0.16 0 -0 -1.47 </pose> 
+      <pose> 0.02 1.79 0.23 0 -0 -1.5651 </pose> 
     </include>
 
 
