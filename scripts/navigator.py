@@ -67,7 +67,7 @@ class Navigator:
         self.plan_start = [0.0, 0.0]
 
         # Robot limits
-        self.v_max = 1  # maximum velocity
+        self.v_max = .3  # maximum velocity
         self.om_max = 0.4  # maximum angular velocity
 
         self.v_des = 0.12  # desired cruising velocity
@@ -121,7 +121,10 @@ class Navigator:
         rospy.Subscriber("/map", OccupancyGrid, self.map_callback)
         rospy.Subscriber("/map_metadata", MapMetaData, self.map_md_callback)
         rospy.Subscriber("/cmd_nav", Pose2D, self.cmd_nav_callback)
+        rospy.Subscriber("/rescue_nav", Pose2D, self.rescue_nav_callback)
 
+
+        self.ignore_cmd_nav = False
         print("finished init")
 
     def dyn_cfg_callback(self, config, level):
@@ -133,15 +136,33 @@ class Navigator:
         self.pose_controller.k3 = config["k3"]
         return config
 
-    def cmd_nav_callback(self, data):
-        """
-        loads in goal if different from current goal, and replans
-        """
+
+    def rescue_nav_callback(self, data): 
+        self.ignore_cmd_nav = True
         if (
             data.x != self.x_g
             or data.y != self.y_g
             or data.theta != self.theta_g
         ):
+            rospy.loginfo("cmd_nav!!!!!!!!")
+            rospy.logdebug(f"New command nav received:\n{data}")
+            self.x_g = data.x
+            self.y_g = data.y
+            self.theta_g = data.theta
+            rospy.loginfo("Replanning for rescue !!!!!")
+            self.replan()
+
+    def cmd_nav_callback(self, data):
+        """
+        loads in goal if different from current goal, and replans
+        """
+        rospy.loginfo("!!!!  GOT NEW POSITIONS !!!!")
+        if (
+            data.x != self.x_g
+            or data.y != self.y_g
+            or data.theta != self.theta_g
+        ) and not(self.ignore_cmd_nav):
+            rospy.loginfo("cmd_nav!!!!!!!!")
             rospy.logdebug(f"New command nav received:\n{data}")
             self.x_g = data.x
             self.y_g = data.y
@@ -206,6 +227,7 @@ class Navigator:
         returns whether the robot has reached the goal position with enough
         accuracy to return to idle state
         """
+        rospy.loginfo("AT GOAL")
         return (
             linalg.norm(np.array([self.x - self.x_g, self.y - self.y_g]))
             < self.at_thresh
@@ -217,6 +239,7 @@ class Navigator:
         returns whether robot is aligned with starting direction of path
         (enough to switch to tracking controller)
         """
+        rospy.loginfo("ALIGNED")
         return (
             abs(wrapToPi(self.theta - self.th_init)) < self.theta_start_thresh
         )

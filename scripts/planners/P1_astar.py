@@ -132,6 +132,7 @@ class AStar(object):
         Output:
             A list of tuples, which is a list of the states that go from start to goal
         """
+        print("Reconstructing path !!!!!")
         path = [self.x_goal]
         # print("path = ", path)
         current = path[-1]
@@ -219,7 +220,7 @@ class AStar(object):
                 
                 # calculate tentative cost to arrive at xNeigh
                 tentativeCostArrive = self.cost_to_arrive[xCurr] + self.distance(xCurr, xNeigh)
-                # print("tentative cost to arrive at xNeigh = ", tentativeCostArrive)
+
                 # print("self cost to arrive xCurr = ", self.cost_to_arrive[xCurr])
                 # print("self cost to arrive xNeigh = ", self.cost_to_arrive[xNeigh])
 

@@ -4,6 +4,8 @@ import rospy
 from visualization_msgs.msg import Marker
 from robot_autonomy.msg import LocObject, LocObjectList
 
+ID_OFFSET = 100 # offset to apply to the id of various markers
+DEBUG_RESCUE = True # put marker at rescue location
 
 class DetectorRvizMarker:
 
@@ -24,26 +26,43 @@ class DetectorRvizMarker:
     def update_markers(self,data):
         for n, det in enumerate(data.objs): 
             # create markers
-            marker = Marker()            
-            marker.header.stamp = rospy.Time()
-            marker.header.frame_id = "map"
-            marker.id = n
-            marker.type = 2 #sphere
-            marker.pose.position.x = float(det.x)
-            marker.pose.position.y = float(det.y)
-            marker.pose.position.z = 0.2
-            marker.scale.x = 0.2
-            marker.scale.y = 0.2
-            marker.scale.z = 0.2
-            marker.color.a = 1.0 # alpha
-            marker.color.r = 1.0
-            marker.color.g = 0.0
-            marker.color.b = 0.0
+            markerObj = Marker()            
+            markerObj.header.stamp = rospy.Time()
+            markerObj.header.frame_id = "map"
+            markerObj.id = n
+            markerObj.type = 2 #sphere
+            markerObj.pose.position.x = float(det.x)
+            markerObj.pose.position.y = float(det.y)
+            markerObj.pose.position.z = 0.2
+            markerObj.scale.x = 0.2
+            markerObj.scale.y = 0.2
+            markerObj.scale.z = 0.2
+            markerObj.color.a = 1.0 # alpha
+            markerObj.color.r = 1.0
+            markerObj.color.g = 0.0
+            markerObj.color.b = 0.0
+
+            if DEBUG_RESCUE:
+                markerRescue = Marker()            
+                markerRescue.header.stamp = rospy.Time()
+                markerRescue.header.frame_id = "map"
+                markerRescue.id = n + ID_OFFSET
+                markerRescue.type = 2 #sphere
+                markerRescue.pose.position.x = float(det.rescue_x)
+                markerRescue.pose.position.y = float(det.rescue_y)
+                markerRescue.pose.position.z = 0.2
+                markerRescue.scale.x = 0.1
+                markerRescue.scale.y = 0.1
+                markerRescue.scale.z = 0.1
+                markerRescue.color.a = 1.0 # alpha
+                markerRescue.color.r = 0.0
+                markerRescue.color.g = 0.0
+                markerRescue.color.b = 1.0
 
             markerTxt = Marker()
             markerTxt.header.stamp = rospy.Time()
             markerTxt.header.frame_id = "map"
-            markerTxt.id = n+100
+            markerTxt.id = n + 2*ID_OFFSET
             markerTxt.type = 9 #text
             markerTxt.text = det.name
             markerTxt.pose.position.x = float(det.x)
@@ -56,7 +75,8 @@ class DetectorRvizMarker:
             markerTxt.color.b = 1.0
 
             # publish!
-            self.pub.publish(marker)
+            self.pub.publish(markerObj)
+            if DEBUG_RESCUE: self.pub.publish(markerRescue)
             self.pub.publish(markerTxt)
 
 

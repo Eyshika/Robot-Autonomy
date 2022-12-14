@@ -70,7 +70,12 @@ class DetectorViz:
 
     def camera_common(self, img, img_bgr8):
         (img_h,img_w,img_c) = img.shape
-        draw_color = (0,0,int(255/ob_msg.confidence))
+        draw_color = (255, 0, 0)
+        if ob_msg.confidence > 0.8: 
+            draw_color = (0, 0, 255)
+        elif ob_msg.confidence > 0.5: 
+            draw_color = (255, 255, 0)
+        # draw_color = (0,0,int(255/ob_msg.confidence))
         if self.detected_objects is not None:
             for ob_msg in self.detected_objects.ob_msgs:
                 ymin, xmin, ymax, xmax = [int(x) for x in ob_msg.corners]

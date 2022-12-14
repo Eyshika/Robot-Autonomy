@@ -117,7 +117,7 @@ class RedisRelay:
             # stamp = rospy.Time(json_stamp['secs'], json_stamp['nsecs'])
             stamp = rospy.get_rostime()
 
-            print("Publish {}({}.{}): {}, {}".format(adversary, stamp.secs, stamp.nsecs, pos, quat))
+            # print("Publish {}({}.{}): {}, {}".format(adversary, stamp.secs, stamp.nsecs, pos, quat))
             self.tf_pub.sendTransform(pos, quat, stamp, adversary, 'map')
 
     def run(self):

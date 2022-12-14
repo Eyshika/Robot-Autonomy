@@ -50,7 +50,7 @@ class PoseControllerNode:
     def __init__(self):
         # Initialize ROS node
         rospy.init_node("turtlebot_pose_controller", anonymous=True)
-        self.params = PoseControllerParams(verbose=True)
+        self.params = PoseControllerParams(verbose=False)
 
         # Current state
         self.x = 0.0

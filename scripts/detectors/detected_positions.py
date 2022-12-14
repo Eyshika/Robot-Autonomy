@@ -9,7 +9,7 @@ from robot_autonomy.msg import LocObject, LocObjectList
 
 # this is the offset applied to the position of detected objects, in
 # the direction of the viewer, applied to object_rescue_position
-TARGET_OFFSET = 0.5
+TARGET_OFFSET = .5
 
 # this is the tolerance on the detected object position, used for
 # checking if detected objects have already been detected
@@ -27,6 +27,8 @@ class DetectedPositions:
         self.detect_obj = {} # coordinates (keys) to object names (values)
         self.tol = DETECTED_OBJECT_POSITION_TOLERANCE
         self.pub.publish("INIT!")
+        self.last_goal_done = True 
+    
 
     def run(self): 
         rate = rospy.Rate(10)
@@ -55,13 +57,12 @@ class DetectedPositions:
             for i in self.detect_obj.keys(): 
                 obj = LocObject()
                 obj.x, obj.y = str(i[0]), str(i[1])
-                #obj.name = self.detect_obj[i][2]
-                # RESCUE:
                 obj.rescue_x, obj.rescue_y = self.detect_obj[i][0]
                 obj.rescue_x = str(obj.rescue_x)
                 obj.rescue_y = str(obj.rescue_y)
                 obj.name = self.detect_obj[i][3]
                 self.pub_list.objs.append(obj) 
+                
             self.pub_clean.publish(self.pub_list)
                 
 
@@ -78,7 +79,7 @@ class DetectedPositions:
             object_pos_robot_frame = d.distance * np.array([np.cos(self.theta), np.sin(self.theta)])
             dist_with_offset = max(d.distance - TARGET_OFFSET, 0)
             object_rescue_pos_robot_frame = dist_with_offset * np.array([np.cos(self.theta), np.sin(self.theta)])
-            print("obj pos:",object_pos_robot_frame,"rescue:",object_rescue_pos_robot_frame)
+            # print("obj pos:",object_pos_robot_frame,"rescue:",object_rescue_pos_robot_frame)
 
             # calculate thetamid from the angles to the outside of the bounding box
             if (d.thetaleft < d.thetaright):
@@ -108,19 +109,19 @@ class DetectedPositions:
             # get transformed locations
             obj_loc = tuple(obj_pos_world_frame)
             obj_rescue_loc = tuple(obj_rescue_pos_world_frame)
-            print("obj loc:",obj_loc,"rescue:",obj_rescue_loc)
+            # print("obj loc:",obj_loc,"rescue:",obj_rescue_loc)
 
             # check if object is already being tracked
             if obj_loc_exist := (self.check_existing(obj_loc)):
                 # if already tracked (within tolerance), adjust with this observation
-                # RESCUE:
-                _, obj_names, count, _ = self.detect_obj[obj_loc_exist]
-                #obj_names, count, _ = self.detect_obj[obj_loc_exist]
+                obj_rescue_loc_exist, obj_names, count, _ = self.detect_obj[obj_loc_exist]
                 if d.name not in obj_names: 
                     obj_names[d.name] = 0
                 obj_names[d.name] += 1
                 new_loc = (np.array(obj_loc_exist) * count + np.array(obj_loc)) / (count + 1)
                 new_loc = tuple(new_loc)
+                new_rescue_loc = (np.array(obj_rescue_loc_exist) * count + np.array(obj_rescue_loc)) / (count + 1)
+                new_rescue_loc = tuple(new_rescue_loc)
                 count += 1
                 self.detect_obj.pop(obj_loc_exist)
                 best_name_count = max(obj_names.values())
@@ -128,16 +129,12 @@ class DetectedPositions:
                     if obj_names[i] == best_name_count:
                         best_name = i
                         break 
-                #self.detect_obj[new_loc] = (obj_names, count, best_name)
-                # RESCUE:
-                self.detect_obj[new_loc] = (obj_rescue_loc, obj_names, count, best_name)
-                print("detect_obj:",self.detect_obj[new_loc])
+                self.detect_obj[new_loc] = (new_rescue_loc, obj_names, count, best_name)
+                # print("detect_obj:",self.detect_obj[new_loc])
                 
             else:
-                #self.detect_obj[obj_loc] = ({d.name: 1}, 1, d.name)
-                # RESCUE:
                 self.detect_obj[obj_loc] = (obj_rescue_loc, {d.name: 1}, 1, d.name)
-                print("detect_obj:",self.detect_obj[obj_loc])
+                # print("detect_obj:",self.detect_obj[obj_loc])
 
 
 

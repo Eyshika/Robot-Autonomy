@@ -43,7 +43,7 @@ class Supervisor:
 
     def __init__(self):
         # Initialize ROS node
-        rospy.init_node('turtlebot_supervisor', anonymous=True)
+        rospy.init_node('speed_control_supervisor', anonymous=True)
         # self.params = SupervisorParams(verbose=False)
 
         # Current state

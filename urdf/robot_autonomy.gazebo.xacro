@@ -63,6 +63,7 @@
     <plugin name="imu_plugin" filename="libgazebo_ros_imu.so">
       <alwaysOn>true</alwaysOn>
       <bodyName>imu_link</bodyName>
+      <frameId>gripper/imu_link</frameId>
       <topicName>/imu</topicName>
       <serviceName>/imu_service</serviceName>
       <gaussianNoise>0.0</gaussianNoise>
@@ -167,6 +168,7 @@
         <distortionT1>0.0</distortionT1>
         <distortionT2>0.0</distortionT2>
       </plugin>
+      <visualize>true</visualize>
     </sensor>
   </gazebo>
 

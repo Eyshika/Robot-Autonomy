@@ -259,7 +259,12 @@ class Detector:
                 ycen = int(0.5 * (ymax - ymin) + ymin)
 
                 # annotate the image
-                draw_color = (0,int(255/sc),0)
+                draw_color = (0, 0, 255)
+                if sc > 0.8: 
+                    draw_color = (0,255,0)
+                elif sc > 0.6: 
+                    draw_color  = (0, 255, 255)
+
                 cv2.rectangle(img_bgr8, (xmin, ymin), (xmax, ymax), draw_color, 2)
                 message = self.object_labels[cl] + ":" + str(round(sc, 2))
                 cv2.putText(img_bgr8, message, (xmin, ymin+13), cv2.FONT_HERSHEY_SIMPLEX, .5, draw_color)
