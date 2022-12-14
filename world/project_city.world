@@ -975,7 +975,7 @@
         <kinematic>0</kinematic>
         <gravity>1</gravity>
       </link>
-      <pose frame=''>3.27582 0.7182 0.00002 -0.001 -0.0011 1.602</pose>
+      <pose frame=''>3.27582 0.76788 0.00002 -0.001 -0.0011 1.602</pose>
     </model>
 
     <model name='Stop Sign 2'>
@@ -1035,7 +1035,7 @@
         <kinematic>0</kinematic>
         <gravity>1</gravity>
       </link>
-      <pose frame=''>.77106 2.1503 0.0098 -0.001 -0.0011 1.602</pose>
+      <pose frame=''>.768971 2.217217 0.0098 -0.001 -0.0011 1.602</pose>
     </model>
 
     <model name='Stop Sign 3'>
@@ -1095,7 +1095,7 @@
         <kinematic>0</kinematic>
         <gravity>1</gravity>
       </link>
-      <pose frame=''>0.88412 0.6018 0.00123 0.004 0.005 1.5989</pose>
+      <pose frame=''>0.882241 0.668628 0.00123 0.004 0.005 1.5989</pose>
     </model>
 
     <model name='Stop Sign 4'>
@@ -1155,7 +1155,7 @@
         <kinematic>0</kinematic>
         <gravity>1</gravity>
       </link>
-      <pose frame=''>3.097998 2.936 0.001044 0.0011 -0.00009 -0.0493</pose>
+      <pose frame=''>3.153869 2.936 0.001044 0.0011 -0.00009 -0.0493</pose>
     </model>
 
     <include>
@@ -1171,7 +1171,7 @@
     
     <include>
       <uri>model://Cow1</uri>   
-      <pose> 3.2577 1.5232 0.18 0 -0 1.58 </pose> 
+      <pose> 3.256678 1.5232 0.18 0 -0 1.58 </pose> 
     </include>
 
     <include>
@@ -1232,7 +1232,7 @@
   
     <include>
       <uri>model://Elephant</uri>   
-      <pose> 1.885 0.772 0.2632 0 -0 0.071 </pose> 
+      <pose> 1.885 0.801677 0.2632 0 -0 -0.014044 </pose> 
     </include>
 
     <gravity>0 0 -9.8</gravity>
@@ -1276,7 +1276,7 @@
     </state>
     <gui fullscreen='0'>
       <camera name='user_camera'>
-        <pose frame=''>3.83451 2.65732 3.83338 0 1.11164 -2.687</pose>
+        <pose frame=''>4.37139 1.77896 4.47079 0 1.1818 3.13219</pose>
         <view_controller>orbit</view_controller>
         <projection_type>perspective</projection_type>
       </camera>

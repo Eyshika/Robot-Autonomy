@@ -7,7 +7,7 @@
       <collision name="collision">
         <geometry>
           <box>
-            <size>.5895 0.011 .5223</size>
+            <size>.5895 0.0036 .5223</size>
           </box>
         </geometry>
       </collision>
@@ -15,7 +15,7 @@
         <cast_shadows>false</cast_shadows>
         <geometry>
           <box>
-            <size>.5895 0.011 .5223</size>
+            <size>.5895 0.0036 .5223</size>
           </box>
         </geometry>
         <material>
