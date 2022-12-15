@@ -268,7 +268,7 @@ class AStar(object):
                 self.open_set.add(self.x_init)
                 self.cost_to_arrive[self.x_init] = 0
                 self.est_cost_through[self.x_init] = self.distance(self.x_init,self.x_goal)
-                rospy.loginfo(" reattempting with x_init:(%.2f, %.2f)",nIterations,self.x_init[0],self.x_init[1])
+                rospy.loginfo(" reattempting with x_init:(%.2f, %.2f)",self.x_init[0],self.x_init[1])
 
         return False   
 
