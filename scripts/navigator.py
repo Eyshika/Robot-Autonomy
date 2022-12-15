@@ -68,10 +68,10 @@ class Navigator:
 
         # Robot limits
         self.v_max = .3  # maximum velocity
-        self.om_max = 0.4  # maximum angular velocity
+        self.om_max = 0.5 # maximum angular velocity
 
-        self.v_des = 0.12  # desired cruising velocity
-        self.theta_start_thresh = 0.05  # threshold in theta to start moving forward when path-following
+        self.v_des = 0.15  # desired cruising velocity
+        self.theta_start_thresh = 0.04  # threshold in theta to start moving forward when path-following
         self.start_pos_thresh = (
             0.2  # threshold to be far enough into the plan to recompute it
         )
@@ -79,10 +79,13 @@ class Navigator:
         # threshold at which navigator switches from trajectory to pose control
         self.near_thresh = 0.2
         self.at_thresh = 0.02
-        self.at_thresh_theta = 0.05
+        self.at_thresh_theta = 0.6 # THIS NEEDS TO BE A LOT BETTER!
+
+        # # threshold at which we can replan our path
+        self.replan_length_thresh = 4
 
         # trajectory smoothing
-        self.spline_alpha = 0.15
+        self.spline_alpha = 0.07
         self.spline_deg = 3  # cubic spline
         self.traj_dt = 0.1
 
@@ -122,7 +125,10 @@ class Navigator:
         rospy.Subscriber("/map_metadata", MapMetaData, self.map_md_callback)
         rospy.Subscriber("/cmd_nav", Pose2D, self.cmd_nav_callback)
         rospy.Subscriber("/rescue_nav", Pose2D, self.rescue_nav_callback)
-
+        rospy.Subscriber('/cmd_vel', Twist, self.cmd_vel_callback) #for checking position ;live
+        self.set_next = False
+        self.start_time = rospy.get_rostime()
+        self.end_time = rospy.get_rostime()
 
         self.ignore_cmd_nav = False
         print("finished init")
@@ -162,8 +168,7 @@ class Navigator:
             or data.y != self.y_g
             or data.theta != self.theta_g
         ) and not(self.ignore_cmd_nav):
-            rospy.loginfo("cmd_nav!!!!!!!!")
-            rospy.logdebug(f"New command nav received:\n{data}")
+            rospy.loginfo(f"New command nav received:\n{data}")
             self.x_g = data.x
             self.y_g = data.y
             self.theta_g = data.theta
@@ -195,13 +200,15 @@ class Navigator:
                 self.map_height,
                 self.map_origin[0],
                 self.map_origin[1],
-                7,
+                9,
                 self.map_probs,
             )
-            if self.x_g is not None:
+            if self.x_g is not None and self.mode != Mode.IDLE and not self.near_goal():
                 # if we have a goal to plan to, replan
                 rospy.loginfo("replanning because of new map")
                 self.replan()  # new map, need to replan
+            else:
+                rospy.loginfo("New Map received but not replanning due to IDLE State")
 
     def shutdown_callback(self):
         """
@@ -227,19 +234,33 @@ class Navigator:
         returns whether the robot has reached the goal position with enough
         accuracy to return to idle state
         """
-        rospy.loginfo("AT GOAL")
-        return (
-            linalg.norm(np.array([self.x - self.x_g, self.y - self.y_g]))
-            < self.at_thresh
-            and abs(wrapToPi(self.theta - self.theta_g)) < self.at_thresh_theta
-        )
+        # dist_diff = linalg.norm(np.array([self.x - self.x_g, self.y - self.y_g]))
+        # theta_diff = abs(wrapToPi(self.theta - self.theta_g))
+        # rospy.loginfo("DIFF- dist: %.3f/%.2f theta: %.3f/%.2f",dist_diff,self.at_thresh,theta_diff,self.at_thresh_theta)
+        return (linalg.norm(np.array([self.x-self.x_g, self.y-self.y_g])) < self.near_thresh and abs(wrapToPi(self.theta - self.theta_g)) < self.at_thresh_theta)
+
+    def cmd_vel_callback(self, data):
+        # linear = data.linear 
+        # lin_x, lin_y, lin_z = linear.x, linear.y, linear.z
+        # angular = data.angular
+        # ang_x, ang_y, ang_z = angular.x, angular.y, angular.z 
+        if abs(data.linear.x) < 0.00000001 and abs(data.linear.z) < 0.00000001: 
+            self.end_time = rospy.get_rostime()
+        else: 
+            self.start_time = rospy.get_rostime()
+
+        if (self.end_time-self.start_time)>rospy.Duration.from_sec(3): 
+            self.set_next = True
+            # rospy.loginfo("ROBOT STOPPED")
+        else: 
+            self.set_next = False
+            #self.end_time = rospy.get_rostime()
 
     def aligned(self):
         """
         returns whether robot is aligned with starting direction of path
         (enough to switch to tracking controller)
         """
-        rospy.loginfo("ALIGNED")
         return (
             abs(wrapToPi(self.theta - self.th_init)) < self.theta_start_thresh
         )
@@ -362,7 +383,7 @@ class Navigator:
         planned_path = problem.path
 
         # Check whether path is too short
-        if len(planned_path) < 4:
+        if len(planned_path) <= 4:
             rospy.loginfo("Path too short to track")
             self.pose_controller.load_goal(self.x_g, self.y_g, self.theta_g)
             self.switch_mode(Mode.PARK)
@@ -411,6 +432,8 @@ class Navigator:
             rospy.loginfo("Not aligned with start direction")
             self.switch_mode(Mode.ALIGN)
             return
+        else:
+            rospy.loginfo("ALIGNED")
 
         rospy.loginfo("Ready to track")
         self.switch_mode(Mode.TRACK)
@@ -458,12 +481,16 @@ class Navigator:
                     rospy.loginfo("replanning because out of time")
                     self.replan()  # we aren't near the goal but we thought we should have been, so replan
             elif self.mode == Mode.PARK:
-                if self.at_goal():
+                if self.at_goal() or self.set_next:
+                    rospy.loginfo("PARKED")
+                    self.set_next = False
                     # forget about goal:
                     self.x_g = None
                     self.y_g = None
                     self.theta_g = None
                     self.switch_mode(Mode.IDLE)
+                # else:
+                #     rospy.loginfo("PARKING")
 
             self.publish_control()
             rate.sleep()

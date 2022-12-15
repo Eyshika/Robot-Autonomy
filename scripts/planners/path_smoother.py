@@ -32,12 +32,13 @@ def compute_smoothed_traj(path, V_des, k, alpha, dt):
     nominal_time[0] = 0
     for i_node in range(1, len(path)): #euclidean distance
         nominal_time[i_node] = nominal_time[i_node-1] + np.linalg.norm(path[i_node-1] - path[i_node])/V_des
-    
+
     splx = scipy.interpolate.splrep(nominal_time, path[:,0], k=3, s=alpha)
     sply = scipy.interpolate.splrep(nominal_time, path[:,1], k=3, s=alpha)
     # print(splx, sply)
     # print(dt, nominal_time)
-    t_smoothed = np.arange(nominal_time[0], int(nominal_time[-1]), dt)
+    t_smoothed = np.arange(nominal_time[0], nominal_time[-1], dt)
+
     # print(t_smoothed)
     x_d = scipy.interpolate.splev(t_smoothed, splx, der=0)
     y_d = scipy.interpolate.splev(t_smoothed, sply, der=0)

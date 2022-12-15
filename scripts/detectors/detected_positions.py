@@ -88,7 +88,6 @@ class DetectedPositions:
             if (thetamid > 2*np.pi):
                 thetamid -= 2*np.pi
             #print("**** tl:",d.thetaleft,"tr:",d.thetaright,"tm:",thetamid)
-
             # get rotation matrix
             detect_theta = thetamid
             R_mat = np.array([[np.cos(detect_theta), -np.sin(detect_theta)], 

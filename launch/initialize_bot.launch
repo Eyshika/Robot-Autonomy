@@ -3,8 +3,8 @@
   <arg name="sim" default="true"/>
 
   <include file="$(find robot_autonomy)/launch/root.launch">
-    <arg name="x_pos" default="4.46"/>
-    <arg name="y_pos" default="3.34"/>
+    <arg name="x_pos" default="4.25"/>
+    <arg name="y_pos" default="3.25"/>
     <arg name="z_pos" default="0.0"/>
     <arg name="yaw" default="4.71" />
     <arg name="model" default="robot_autonomy"/>
@@ -17,7 +17,7 @@
   <node pkg="robot_autonomy" type="detector_mobilenet.py" name="detector_mobilenet" output="screen" />
   <node pkg="robot_autonomy" type="detected_positions.py" name="detected_positions" output="screen" />
   <node pkg="robot_autonomy" type="detector_rviz_marker.py" name="detector_rviz_marker" output="screen" />
-  <!-- <node pkg="robot_autonomy" type="speed_control_supervisor.py" name="speed_control_supervisor" output="screen" /> -->
+  <!-- <node pkg="robot_autonomy" type="speed_control_supervisor.py" name="speed_control_supervisor" launch-prefix="gnome-terminal /> -->
 
   <!-- <node pkg="robot_autonomy" type="rescue_command.py" name="rescue_command" output="screen" /> -->
 

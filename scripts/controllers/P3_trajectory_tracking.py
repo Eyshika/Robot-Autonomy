@@ -73,10 +73,13 @@ class TrajectoryTracker:
         # reset velocity to nomial velocity if below threshold
         V_nominal = np.sqrt(xd_d**2 + yd_d**2)
         if abs(self.V_prev) < V_PREV_THRES:
-            self.V_prev = V_nominal
+            #self.V_prev = V_nominal
+            J = np.array([[np.cos(th), -yd_d],
+                            [np.sin(th), xd_d]])
         
         # invertible J matrix
-        J = np.array([[np.cos(th), -self.V_prev*np.sin(th)],
+        else:
+            J = np.array([[np.cos(th), -self.V_prev*np.sin(th)],
                       [np.sin(th),  self.V_prev*np.cos(th)]])
         Jinv = np.linalg.inv(J)
         # alpha om calculations

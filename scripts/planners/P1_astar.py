@@ -2,6 +2,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 import matplotlib.patches as patches
 from utils import plot_line_segments
+import rospy
 
 class AStar(object):
     """Represents a motion planning problem to be solved using A*"""
@@ -193,7 +194,18 @@ class AStar(object):
         """
         ########## Code starts here ##########
         # while open set is > 0
+        nIterations = 0
         while len(self.open_set) > 0:
+            nIterations += 1
+            # print("A* len(open_set): %d iterations: %d",len(self.open_set),nIterations)
+            if (nIterations > 7500):
+                rospy.loginfo("A* fail due to nIterations > 5000")
+                return False
+            # If length of open set is > 150, we return Failure
+            if len(self.open_set) > 350:
+                rospy.loginfo(" A* failed due to bigger open set")
+                return False
+
             # get the lowest est_cost_through in open set
             xCurr = self.find_best_est_cost_through()
             # print("xCurr = ", xCurr)
@@ -227,6 +239,7 @@ class AStar(object):
                 # add xNeigh to open set (to be explored)
                 if xNeigh not in self.open_set:
                     self.open_set.add(xNeigh)
+                    # self.cost_to_arrive[xNeigh] = np.inf
                 elif tentativeCostArrive > self.cost_to_arrive[xNeigh]:     # default/ initial cost to xNeigh is infinity
                     continue
                 

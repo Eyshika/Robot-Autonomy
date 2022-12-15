@@ -607,14 +607,14 @@
         <collision name='collision'>
           <geometry>
             <box>
-              <size>0.485267 0.001 1</size>
+              <size>0.390425 0.001 1</size>
             </box>
           </geometry>
         </collision>
         <visual name='visual'>
           <geometry>
             <box>
-              <size>0.485267 0.001 1</size>
+              <size>0.390425 0.001 1</size>
             </box>
           </geometry>
           <material>
@@ -625,7 +625,7 @@
           </material>
         </visual>
       </link>
-      <pose>2.211 2.5419 0 0 0 -2.31917</pose>
+      <pose>2.24402 2.577469 0 0 0 -2.31917</pose>
     </model>
 
     <model name='wall_23'>
@@ -914,7 +914,7 @@
         <kinematic>0</kinematic>
         <gravity>1</gravity>
       </link>
-      <pose frame=''>2.2576 2.483 0 0 -0 0.824</pose>
+      <pose frame=''>2.3386 2.57056 0 0 -0 0.824</pose>
     </model>
 
 
