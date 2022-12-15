@@ -1,4 +1,4 @@
 <launch>
     <node pkg="robot_autonomy" type="rescue_command.py" name="rescue_command" output="screen" />
-
+    <node pkg="robot_autonomy" type="speed_control_supervisor.py" name="speed_control_supervisor" output="screen" launch-prefix="gnome-terminal"/> 
 </launch>

@@ -508,7 +508,8 @@ class Navigator:
                 if self.near_goal():
                     self.switch_mode(Mode.PARK)
                 elif not self.rescue_mode and (rospy.get_rostime() - self.last_successful_replan_time).to_sec() > self.replan_time:
-                    self.replan()
+                    # self.replan()
+                    pass
             elif self.mode == Mode.PARK:
                 if self.at_goal():
                     rospy.loginfo("PARKED")
