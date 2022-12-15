@@ -133,7 +133,6 @@ class AStar(object):
         Output:
             A list of tuples, which is a list of the states that go from start to goal
         """
-        print("Reconstructing path !!!!!")
         path = [self.x_goal]
         # print("path = ", path)
         current = path[-1]
@@ -195,6 +194,7 @@ class AStar(object):
         ########## Code starts here ##########
         # while open set is > 0
         nIterations = 0
+        secondAttempt = False
         while len(self.open_set) > 0:
             nIterations += 1
             # print("A* len(open_set): %d iterations: %d",len(self.open_set),nIterations)
@@ -214,7 +214,6 @@ class AStar(object):
             if xCurr == self.x_goal:
                 # print("self.path = ", self.path)
                 self.path = self.reconstruct_path() 
-                
                 return True
             
             # remove xCurr from open set and add to closed set
@@ -254,6 +253,23 @@ class AStar(object):
                 # set cost to goal ("total cost")
                 self.est_cost_through[xNeigh] = tentativeCostArrive + self.distance(xNeigh, self.x_goal)
         
+            # try to rescue a failed solve attempt ONE TIME!
+            if len(self.open_set) == 0 and nIterations == 1 and not secondAttempt:
+                secondAttempt = True
+
+                rospy.loginfo("A* solver failed; nIter:%d x_init:(%.2f, %.2f) x_goal:(%.2f, %.2f)",
+                                nIterations,self.x_init[0],self.x_init[1],self.x_goal[0],self.x_goal[1])
+
+                offset_pos = 0.25
+                self.x_init = (self.x_init[0] + np.random.rand() * offset_pos - offset_pos/2,
+                            self.x_init[1] + np.random.rand() * offset_pos - offset_pos/2)
+                self.x_init = self.snap_to_grid(self.x_init)    # initial state
+
+                self.open_set.add(self.x_init)
+                self.cost_to_arrive[self.x_init] = 0
+                self.est_cost_through[self.x_init] = self.distance(self.x_init,self.x_goal)
+                rospy.loginfo(" reattempting with x_init:(%.2f, %.2f)",nIterations,self.x_init[0],self.x_init[1])
+
         return False   
 
         ########## Code ends here ##########
