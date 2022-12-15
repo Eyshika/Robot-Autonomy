@@ -177,18 +177,18 @@ class Navigator:
                 self.x_g = data.x
                 self.y_g = data.y
                 self.theta_g = data.theta
-                # if not self.replan():
-                #     rospy.loginfo("!!!! CMD_NAV POSITION CANNOT BE PLANNED !!!!")
-                #     self.switch_mode(Mode.IDLE)
+                if not self.replan():
+                    rospy.loginfo("!!!! CMD_NAV POSITION CANNOT BE PLANNED !!!!")
+                    self.switch_mode(Mode.IDLE)
 
-                # keep replanning until we succeed, failure is not an option
-                offset_pos = 0.25
-                offset_th = 0.1
-                while not self.replan():
-                    self.x_g = data.x + np.random.rand() * offset_pos - offset_pos/2
-                    self.y_g = data.y + np.random.rand() * offset_pos - offset_pos/2
-                    self.theta_g = data.theta + np.random.rand() * offset_th + offset_th/2
-                    rospy.loginfo("New goal: x:%.2f y:%.2f th:%.2f",self.x_g,self.y_g,self.theta_g)
+                # # keep replanning until we succeed, failure is not an option
+                # offset_pos = 0.25
+                # offset_th = 0.1
+                # while not self.replan():
+                #     self.x_g = data.x + np.random.rand() * offset_pos - offset_pos/2
+                #     self.y_g = data.y + np.random.rand() * offset_pos - offset_pos/2
+                #     self.theta_g = data.theta + np.random.rand() * offset_th + offset_th/2
+                #     rospy.loginfo("New goal: x:%.2f y:%.2f th:%.2f",self.x_g,self.y_g,self.theta_g)
 
     def map_md_callback(self, msg):
         """

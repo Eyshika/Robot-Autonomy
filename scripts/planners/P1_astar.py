@@ -194,10 +194,9 @@ class AStar(object):
         ########## Code starts here ##########
         # while open set is > 0
         nIterations = 0
-        nAttempt = 0
+        nAttempt = 1
         while len(self.open_set) > 0:
             nIterations += 1
-            nAttempt += 1
 
             # print("A* len(open_set): %d iterations: %d",len(self.open_set),nIterations)
             if (nIterations > 7500):
