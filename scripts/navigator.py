@@ -64,13 +64,15 @@ class Navigator:
         # time when we started following the plan
         self.current_plan_start_time = rospy.get_rostime()
         self.current_plan_duration = 0
+        self.last_successful_replan_time = rospy.get_rostime()
+        self.replan_time = 5
         self.plan_start = [0.0, 0.0]
 
         # Robot limits
-        self.v_max = .2  # maximum velocity
+        self.v_max = .15  # maximum velocity
         self.om_max = 0.4 # maximum angular velocity
 
-        self.v_des = 0.12  # desired cruising velocity
+        self.v_des = 0.1  # desired cruising velocity
         self.theta_start_thresh = 0.04  # threshold in theta to start moving forward when path-following
         self.start_pos_thresh = (
             0.2  # threshold to be far enough into the plan to recompute it
@@ -94,6 +96,9 @@ class Navigator:
         self.kpy = 0.5
         self.kdx = 1.5
         self.kdy = 1.5
+
+        # start in explore mode
+        self.rescue_mode = False
 
         # heading controller parameters
         self.kp_th = 2.0
@@ -130,7 +135,6 @@ class Navigator:
         self.start_time = rospy.get_rostime()
         self.end_time = rospy.get_rostime()
 
-        self.ignore_cmd_nav = False
         rospy.loginfo("Navigator: finished init")
 
     def dyn_cfg_callback(self, config, level):
@@ -143,8 +147,8 @@ class Navigator:
         return config
 
 
-    def rescue_nav_callback(self, data): 
-        self.ignore_cmd_nav = True
+    def rescue_nav_callback(self, data):
+        self.rescue_mode = True
         if (data.x != self.x_g or data.y != self.y_g or data.theta != self.theta_g):
             rospy.loginfo("!!!! GOT NEW RESCUE CMD_NAV POSITIONS !!!!")
             rospy.loginfo("New goal: x:%.2f y:%.2f th:%.2f",data.x,data.y,data.theta)
@@ -152,14 +156,18 @@ class Navigator:
             self.y_g = data.y
             self.theta_g = data.theta
 
-            # keep replanning until we succeed, failure is not an option
-            offset_pos = 0.25
-            offset_th = 1
-            while not self.replan():
-                self.x_g = data.x + np.random.rand() * offset_pos + offset_pos/2
-                self.y_g = data.y + np.random.rand() * offset_pos + offset_pos/2
-                self.theta_g = data.theta + np.random.rand() * offset_th + offset_th/2
-                rospy.loginfo("New goal: x:%.2f y:%.2f th:%.2f",self.x_g,self.y_g,self.theta_g)
+            if not self.replan():
+                rospy.loginfo("!!!! RESCUE CMD_NAV POSITION CANNOT BE PLANNED !!!!")
+                self.switch_mode(Mode.IDLE)
+
+            # # keep replanning until we succeed, failure is not an option
+            # offset_pos = 0.25
+            # offset_th = 1
+            # while not self.replan():
+            #     self.x_g = data.x + np.random.rand() * offset_pos - offset_pos/2
+            #     self.y_g = data.y + np.random.rand() * offset_pos - offset_pos/2
+            #     self.theta_g = data.theta + np.random.rand() * offset_th + offset_th/2
+            #     rospy.loginfo("New goal: x:%.2f y:%.2f th:%.2f",self.x_g,self.y_g,self.theta_g)
 
 
 
@@ -169,26 +177,14 @@ class Navigator:
         """
         if (data.x != self.x_g or data.y != self.y_g or data.theta != self.theta_g):
             rospy.loginfo("!!!! GOT NEW CMD_NAV POSITIONS !!!!")
-        
-            if self.ignore_cmd_nav:
-                rospy.loginfo("---- Ignoring; in rescue mode ----")
-            else:
-                rospy.loginfo("New goal: x:%.2f y:%.2f th:%.2f",data.x,data.y,data.theta)
-                self.x_g = data.x
-                self.y_g = data.y
-                self.theta_g = data.theta
-                if not self.replan():
-                    rospy.loginfo("!!!! CMD_NAV POSITION CANNOT BE PLANNED !!!!")
-                    self.switch_mode(Mode.IDLE)
+            rospy.loginfo("New goal: x:%.2f y:%.2f th:%.2f",data.x,data.y,data.theta)
+            self.x_g = data.x
+            self.y_g = data.y
+            self.theta_g = data.theta
+            if not self.replan():
+                rospy.loginfo("!!!! CMD_NAV POSITION CANNOT BE PLANNED !!!!")
+                self.switch_mode(Mode.IDLE)
 
-                # # keep replanning until we succeed, failure is not an option
-                # offset_pos = 0.25
-                # offset_th = 0.1
-                # while not self.replan():
-                #     self.x_g = data.x + np.random.rand() * offset_pos - offset_pos/2
-                #     self.y_g = data.y + np.random.rand() * offset_pos - offset_pos/2
-                #     self.theta_g = data.theta + np.random.rand() * offset_th + offset_th/2
-                #     rospy.loginfo("New goal: x:%.2f y:%.2f th:%.2f",self.x_g,self.y_g,self.theta_g)
 
     def map_md_callback(self, msg):
         """
@@ -359,6 +355,12 @@ class Navigator:
             V = 0.0
             om = 0.0
 
+        # should be unnecessary, but limit to +/- v_max and om_max
+        if V > self.v_max: V = self.v_max
+        if V < -self.v_max: V = -self.v_max
+        if om > self.om_max: om = self.om_max
+        if om < -self.om_max: om = -self.om_max
+
         cmd_vel = Twist()
         cmd_vel.linear.x = V
         cmd_vel.angular.z = om
@@ -402,6 +404,8 @@ class Navigator:
 
         if self.mode != Mode.TRACK:
             rospy.loginfo("Navigator: computing nav plan")
+        else:
+            rospy.loginfo("Navigator: re-evaluating plan")
 
         success = problem.solve()
         if not success:
@@ -414,6 +418,7 @@ class Navigator:
             rospy.loginfo("Navigator: new path too short, PARKING")
             self.pose_controller.load_goal(self.x_g, self.y_g, self.theta_g)
             self.switch_mode(Mode.PARK)
+            self.last_successful_replan_time = rospy.get_rostime()
             return True
 
         # Smooth and generate a trajectory
@@ -459,11 +464,14 @@ class Navigator:
         if not self.aligned():
             rospy.loginfo("Navigator: not aligned with start direction")
             self.switch_mode(Mode.ALIGN)
+            self.last_successful_replan_time = rospy.get_rostime()
             return True
 
         rospy.loginfo("Navigator: tracking new plan")
         self.switch_mode(Mode.TRACK)
+        self.last_successful_replan_time = rospy.get_rostime()
         return True
+
 
     def run(self):
         rate = rospy.Rate(10)  # 10 Hz
@@ -499,8 +507,7 @@ class Navigator:
             elif self.mode == Mode.TRACK:
                 if self.near_goal():
                     self.switch_mode(Mode.PARK)
-                else:
-                    # constantly replan while moving
+                elif not self.rescue_mode and (rospy.get_rostime() - self.last_successful_replan_time).to_sec() > self.replan_time:
                     self.replan()
             elif self.mode == Mode.PARK:
                 if self.at_goal():

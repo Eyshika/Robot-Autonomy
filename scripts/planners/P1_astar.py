@@ -194,7 +194,6 @@ class AStar(object):
         ########## Code starts here ##########
         # while open set is > 0
         nIterations = 0
-        nAttempt = 1
         while len(self.open_set) > 0:
             nIterations += 1
 
@@ -205,10 +204,6 @@ class AStar(object):
             # If length of open set is too big, we return Failure
             if len(self.open_set) > 500:
                 rospy.loginfo(" A* failed due to bigger open set")
-                return False
-            # if we've tried adjusting the init and goal to make the planner succeed
-            if nAttempt > 10:
-                rospy.loginfo(" A* fail: too many x_init/x_goal nudges")
                 return False
 
             # get the lowest est_cost_through in open set
@@ -258,27 +253,6 @@ class AStar(object):
                 # set cost to goal ("total cost")
                 self.est_cost_through[xNeigh] = tentativeCostArrive + self.distance(xNeigh, self.x_goal)
         
-            # try to rescue a failed solve attempt ONE TIME!
-            if len(self.open_set) == 0 and nIterations == 1:
-                nAttempt += 1
-
-                rospy.loginfo(" A* solver failed; x_init:(%.2f, %.2f) x_goal:(%.2f, %.2f)",
-                                self.x_init[0],self.x_init[1],self.x_goal[0],self.x_goal[1])
-
-                offset_pos = 0.2
-                self.x_init = (self.x_init[0] + np.random.rand() * offset_pos - offset_pos/2,
-                                self.x_init[1] + np.random.rand() * offset_pos - offset_pos/2)
-                self.x_init = self.snap_to_grid(self.x_init)
-                self.x_goal = (self.x_goal[0] + np.random.rand() * offset_pos - offset_pos/2,
-                                self.x_goal[1] + np.random.rand() * offset_pos - offset_pos/2)
-                self.x_goal = self.snap_to_grid(self.x_goal)
-
-                self.open_set.add(self.x_init)
-                self.cost_to_arrive[self.x_init] = 0
-                self.est_cost_through[self.x_init] = self.distance(self.x_init,self.x_goal)
-                rospy.loginfo("  reattempting with x_init:(%.2f, %.2f) x_goal:(%.2f, %.2f)",
-                                self.x_init[0],self.x_init[1],self.x_goal[0],self.x_goal[1])
-
         return False   
 
         ########## Code ends here ##########
